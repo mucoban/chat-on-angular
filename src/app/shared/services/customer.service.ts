@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Subject } from 'rxjs';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +11,17 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 export class CustomerService {
   userData: any; 
   isUserSingedIn = new Subject<boolean>();
-  private clientId: string;
+  customerStatus = new Subject<string>();
+  private clientId: string = '';
+  private chatRoomId: string = '';
   
   constructor(
     public afs: AngularFirestore, 
     public afAuth: AngularFireAuth,
     private db: AngularFireDatabase
-  ) {
-    this.clientId = '6fd8u565'; 
+  ) { }
 
+  initCustomer() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
@@ -59,11 +62,25 @@ export class CustomerService {
 
   checkForChatRoom() {
     const o = this.db.list('chatRooms', ref => ref.orderByChild('clientId').equalTo(this.clientId));
-    o.snapshotChanges().subscribe((res) => {
-      res = res.filter(i => (i.payload.val() as any)?.status === 'open');
-      if (!res.length) { console.log('no'); }
-      else { console.log(res[0].payload.val()); }
-    });;
+    o.snapshotChanges()
+      .pipe(first())
+      .subscribe((res) => {
+          res = res.filter(i => (i.payload.val() as any)?.status === 'open');
+          if (!res.length) { console.log('no'); }
+          else { 
+            this.chatRoomId = res[0].key as string;
+            this.initChatRoom();
+          }
+      });
+  }
+
+  private initChatRoom() {
+    this.customerStatus.next('chat-started');
+    const o = this.db.list('chatRooms/' + this.chatRoomId);
+    o.snapshotChanges()
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
 }

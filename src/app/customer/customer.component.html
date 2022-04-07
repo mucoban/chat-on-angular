@@ -1,1 +1,24 @@
-<p>customer works!</p>
+<ng-container *ngIf="customerStatus === 'waiting'">
+    <button class="btn big positive" (click)="initChat()">Chate başla</button>
+</ng-container>
+
+<ng-container *ngIf="customerStatus === 'chat-started'">
+   <div class="messages-box">
+        <div class="message agent">
+            <div class="inner">agent</div>
+        </div>
+        <div class="message customer">
+            <div class="inner">customer</div>
+        </div>
+   </div>
+   <div class="input-box">
+       <form [formGroup]="inputForm" (submit)="onSubmit()">
+           <div class="col">
+                <input type="text" placeholder="message" formControlName="message">
+            </div>
+            <div class="col">
+                <button class="btn">Send</button>
+            </div>
+       </form>
+   </div>
+</ng-container>

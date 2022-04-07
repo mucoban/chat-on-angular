@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+
+.btn { 
+    padding: 5px 10px; border: 1px solid #999; background: #eee; cursor: pointer;
+    border-radius: 5px; 
+    &.big { font-size: 24px; width: 100%; }
+    &.positive { background-color: darkgreen; color: white; font-weight: 100; }
+}
+
+.messages-box { 
+    background-color: white;
+    padding: 10px; margin-bottom: 10px;
+ }
+.message {
+    margin-bottom: 5px;
+    .inner {
+        display: inline-block; background-color: #748ccc; padding: 5px 10px;
+        border-radius: 5px; color: white;
+    }
+    &.customer { 
+        text-align: right;
+        .inner {
+            background-color: #57c28e; 
+        }
+     }
+}
+
+.input-box {
+    form {  display: flex; }
+    .col {    
+        display: flex;
+        &:nth-child(1) { flex-grow: 1; padding-right: 10px; }
+    }
+    input { width: 100%; outline: none; padding: 5px 10px; border: 1px solid #ccc; }
+}
