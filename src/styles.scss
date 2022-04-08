@@ -12,15 +12,15 @@
     padding: 10px; margin-bottom: 10px;
  }
 .message {
-    margin-bottom: 5px;
+    margin-bottom: 5px; text-align: right;
     .inner {
-        display: inline-block; background-color: #748ccc; padding: 5px 10px;
+        display: inline-block; background-color: #57c28e;  padding: 5px 10px;
         border-radius: 5px; color: white;
     }
-    &.customer { 
-        text-align: right;
+    &.agent { 
+        text-align: left;
         .inner {
-            background-color: #57c28e; 
+            background-color: #748ccc;
         }
      }
 }

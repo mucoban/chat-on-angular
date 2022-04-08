@@ -4,11 +4,8 @@
 
 <ng-container *ngIf="customerStatus === 'chat-started'">
    <div class="messages-box">
-        <div class="message agent">
-            <div class="inner">agent</div>
-        </div>
-        <div class="message customer">
-            <div class="inner">customer</div>
+        <div class="message" *ngFor="let message of messages" [ngClass]="{ 'agent': message.sender === 'agent' }">
+            <div class="inner">{{ message?.message }}</div>
         </div>
    </div>
    <div class="input-box">

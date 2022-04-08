@@ -4,6 +4,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Subject } from 'rxjs';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { first } from 'rxjs/operators';
+import { MessageModel } from '../models/message.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,8 @@ export class CustomerService {
   userData: any; 
   isUserSingedIn = new Subject<boolean>();
   customerStatus = new Subject<string>();
+  newMessage = new Subject<{time: number, sender: string, message: string}>();
+  private messages: MessageModel[] = [];
   private clientId: string = '';
   private chatRoomId: string = '';
   
@@ -79,8 +83,33 @@ export class CustomerService {
     const o = this.db.list('chatRooms/' + this.chatRoomId);
     o.snapshotChanges()
       .subscribe((res) => {
-        console.log(res);
+      
+        const messages = res.find(i => i.key === 'messages');
+        
+        const messagesPayload = Object.values((messages as any).payload.val())
+          .sort((a: any, b: any) => a.time - b.time);
+        
+        (messagesPayload).map((item) => {
+          const messageItem: any = item;
+          const found = this.messages.find((tm: any) => tm.time === messageItem.time);
+          if (!found) { 
+            const newMessageItem = {  
+              time: messageItem.time,
+               sender: messageItem.sender, 
+               message: messageItem.message 
+              };
+            this.messages.push(newMessageItem);
+            this.newMessage.next(newMessageItem);
+           }
+          return messageItem;
+        }); 
+
       });
+  }
+
+  sendMessage(message: string) {
+    const newMessageItem: MessageModel  = { time: new Date().getTime(), sender: 'client', message: message };
+    this.db.list('chatRooms/' + this.chatRoomId + '/messages').push(newMessageItem);
   }
 
 }
