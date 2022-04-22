@@ -9,10 +9,11 @@
 
 .messages-box { 
     background-color: white;
-    padding: 10px; margin-bottom: 10px;
+    padding: 10px; margin-bottom: 10px; padding-right: 0px; height: 400px;
+    display: flex; align-items: flex-end;
  }
 .message {
-    margin-bottom: 5px; text-align: right;
+    margin-bottom: 5px; text-align: right; padding-right: 10px;
     .inner {
         display: inline-block; background-color: #57c28e;  padding: 5px 10px;
         border-radius: 5px; color: white;
@@ -33,3 +34,7 @@
     }
     input { width: 100%; outline: none; padding: 5px 10px; border: 1px solid #ccc; }
 }
+
+.action-buttons {
+     text-align: right;
+ }

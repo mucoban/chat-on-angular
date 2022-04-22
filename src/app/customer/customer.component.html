@@ -1,15 +1,23 @@
 <ng-container *ngIf="customerStatus === 'waiting'">
-    <button class="btn big positive" (click)="initChat()">Chate başla</button>
+    <button class="btn big positive" (click)="createChatRoom()">Chate başla</button>
 </ng-container>
 
 <ng-container *ngIf="customerStatus === 'chat-started'">
+    <div class="action-buttons">
+        <button class="btn">-</button>
+        <button class="btn" (click)="endChat()">X</button>
+    </div>
    <div class="messages-box">
-        <div class="message" *ngFor="let message of messages" [ngClass]="{ 'agent': message.sender === 'agent' }">
-            <div class="inner">{{ message?.message }}</div>
-        </div>
+
+        <perfect-scrollbar style="max-width: 600px; max-height: 400px;" fxFlex="auto" >
+            <div class="message" *ngFor="let message of messages" [ngClass]="{ 'agent': message.sender === 'agent' }">
+                <div class="inner">{{ message?.message }}</div>
+            </div>
+        </perfect-scrollbar>
+        
    </div>
    <div class="input-box">
-       <form [formGroup]="inputForm" (submit)="onSubmit()">
+       <form [formGroup]="inputForm" (submit)="insertMessage()">
            <div class="col">
                 <input type="text" placeholder="message" formControlName="message">
             </div>

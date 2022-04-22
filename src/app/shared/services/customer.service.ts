@@ -70,7 +70,7 @@ export class CustomerService {
       .pipe(first())
       .subscribe((res) => {
           res = res.filter(i => (i.payload.val() as any)?.status === 'open');
-          if (!res.length) { console.log('no'); }
+          if (!res.length) { console.log('no open chat room'); }
           else { 
             this.chatRoomId = res[0].key as string;
             this.initChatRoom();
@@ -78,17 +78,31 @@ export class CustomerService {
       });
   }
 
+  createChatRoom() {
+    this.db.list('chatRooms').push({
+        agentName:"agent_a",
+        clientId:"t4if2rc4",
+        clientName:"cli_aa",
+        status: 'open'
+    }).then(res => {
+      this.chatRoomId = res.key as string;
+      this.initChatRoom();
+    });
+  }
+
   private initChatRoom() {
     this.customerStatus.next('chat-started');
     const o = this.db.list('chatRooms/' + this.chatRoomId);
     o.snapshotChanges()
       .subscribe((res) => {
-      
-        const messages = res.find(i => i.key === 'messages');
         
+        const status = res.find(i => i.key === 'status');
+        const messages = res.find(i => i.key === 'messages');
+        if (status?.payload.val() !== 'open' || !messages) return;
+
         const messagesPayload = Object.values((messages as any).payload.val())
           .sort((a: any, b: any) => a.time - b.time);
-        
+
         (messagesPayload).map((item) => {
           const messageItem: any = item;
           const found = this.messages.find((tm: any) => tm.time === messageItem.time);
@@ -110,6 +124,14 @@ export class CustomerService {
   sendMessage(message: string) {
     const newMessageItem: MessageModel  = { time: new Date().getTime(), sender: 'client', message: message };
     this.db.list('chatRooms/' + this.chatRoomId + '/messages').push(newMessageItem);
+  }
+
+  
+  endChat() {
+    this.db.list('chatRooms').update(this.chatRoomId, { status: 'closed' });
+    this.customerStatus.next('waiting');
+    this.chatRoomId = '';
+    this.messages = [];
   }
 
 }

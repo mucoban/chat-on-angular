@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { PerfectScrollbarComponent, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MessageModel } from '../shared/models/message.model';
@@ -12,10 +13,13 @@ import { CustomerService } from '../shared/services/customer.service';
 })
 export class CustomerComponent implements OnInit, OnDestroy {
 
+  @ViewChild(PerfectScrollbarComponent) perfectScrollbarComponent?: PerfectScrollbarComponent;
+  @ViewChild(PerfectScrollbarDirective) perfectScrollbarDirective?: PerfectScrollbarDirective;
+
   private destroy$ = new Subject<boolean>();
   customerStatus: String = 'waiting';
   messages: MessageModel[] = [];
-  
+   
   inputForm = new FormGroup({
     "message": new FormControl()
   });
@@ -28,15 +32,19 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
     this.customerService.customerStatus
       .pipe(takeUntil(this.destroy$))
-      .subscribe(res => { this.customerStatus = res; });
+      .subscribe(res => { 
+        this.customerStatus = res; 
+      });
 
       
     this.customerService.newMessage
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => { 
-        console.log('nm', res);
         this.messages.push(res);
-       });
+        setTimeout(() => { this.scrollToBottom(); }, 100);
+      });
+
+    this.customerService.initCustomer();
   }
 
   ngOnDestroy(): void {
@@ -44,14 +52,23 @@ export class CustomerComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();      
   }
 
-  initChat() {
-    this.customerService.initCustomer();
+  createChatRoom() {
+    this.customerService.createChatRoom();
   }
 
-  onSubmit() {
+  insertMessage() {
     console.log(this.inputForm.value);
     this.customerService.sendMessage(this.inputForm.value.message);
     this.inputForm.reset();
+  }
+
+  endChat() {   
+    this.customerService.endChat(); 
+    this.messages = [];
+  }
+
+  private scrollToBottom() {
+    (this.perfectScrollbarComponent as any)?.directiveRef.scrollToBottom();
   }
 
 }
