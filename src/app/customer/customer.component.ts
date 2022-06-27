@@ -5,7 +5,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MessageModel } from '../shared/models/message.model';
 import { CustomerService } from '../shared/services/customer.service';
-
+import { DimensionsService } from '../shared/services/dimensions.service';
+ 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
@@ -26,13 +27,17 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
   constructor(
     private customerService: CustomerService,
+    private dimensionsService: DimensionsService,
   ) { }
 
   ngOnInit(): void {
 
+    this.dimensionsService.customerMode();
+    
     this.customerService.customerStatus
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => { 
+        if (res === 'chat-started') { this.dimensionsService.chatStarted(); }
         this.customerStatus = res; 
       });
 

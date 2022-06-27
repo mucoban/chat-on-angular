@@ -6,9 +6,8 @@ import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { CustomerComponent } from './customer/customer.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { RouterModule, Routes } from '@angular/router';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -16,17 +15,21 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   swipeEasing: false
 };
 
+const routes: Routes = [
+  { path: '', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule) },
+  { path: 'agent', loadChildren: () => import('./agent/agent.module').then(m => m.AgentModule) }
+];
+
 @NgModule({
   declarations: [
-    AppComponent,
-    CustomerComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot(routes),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    ReactiveFormsModule,
     PerfectScrollbarModule
   ],
   providers: [
