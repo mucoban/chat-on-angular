@@ -1,0 +1,10 @@
+h4 { font-weight: 600; color: #333;
+  span { font-size: 12px; font-weight: 400; margin-left: 15px; }
+}
+.chats { margin-bottom: 15px; display: flex; flex-wrap: wrap;
+  &.old {
+    .chat { border-color: #aaa; background-color: #bbdbef; }
+  }
+}
+.chat { padding: 10px; background-color: white; width: 200px; border-radius: 5px; border: 1px solid green; cursor: pointer;
+  margin-right: 10px;}

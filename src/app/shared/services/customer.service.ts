@@ -11,67 +11,37 @@ import { MessageModel } from '../models/message.model';
   providedIn: 'root'
 })
 export class CustomerService {
-  userData: any; 
-  isUserSingedIn = new Subject<boolean>();
+  userData: any;
   customerStatus = new Subject<string>();
   newMessage = new Subject<{time: number, sender: string, message: string}>();
   private messages: MessageModel[] = [];
   private clientId: string = '';
   private chatRoomId: string = '';
-  
+
   constructor(
-    public afs: AngularFirestore, 
+    public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
     private db: AngularFireDatabase
   ) { }
 
   initCustomer() {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        
-        this.clientId = localStorage.getItem('clientId') as string;
-        if (!this.clientId) {
-            this.clientId = Math.random().toString(36).slice(-8);
-            localStorage.setItem('clientId', this.clientId);
-        }
-        
-        this.checkForChatRoom();
-        this.isUserSingedIn.next(true);
-      } else {
-        localStorage.removeItem('user');
-        this.signIn('webdeveloper.mucahitcoban@gmail.com', '123123aA.');
-        this.isUserSingedIn.next(false);
-      }
-    });
-  }
+    this.clientId = localStorage.getItem('clientId') as string;
+    if (!this.clientId) {
+      this.clientId = Math.random().toString(36).slice(-8);
+      localStorage.setItem('clientId', this.clientId);
+    }
 
-  signIn(email: string, password: string) { 
-    this.afAuth.signInWithEmailAndPassword(email, password)
-      .then((result) => {
-      }).catch((error) => {
-        window.alert(error.message)
-      })
-  }
-
-  SignUp(email: string, password: string) {
-    return this.afAuth.createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        console.log(result);
-      }).catch((error) => {
-        window.alert(error.message)
-      })
+    this.checkForChatRoom();
   }
 
   checkForChatRoom() {
     const o = this.db.list('chatRooms', ref => ref.orderByChild('clientId').equalTo(this.clientId));
     o.snapshotChanges()
       .pipe(first())
-      .subscribe((res) => {
+      .subscribe((res) => { debugger
           res = res.filter(i => (i.payload.val() as any)?.status === 'open');
           if (!res.length) { console.log('no open chat room'); }
-          else { 
+          else {
             this.chatRoomId = res[0].key as string;
             this.initChatRoom();
           }
@@ -95,7 +65,7 @@ export class CustomerService {
     const o = this.db.list('chatRooms/' + this.chatRoomId);
     o.snapshotChanges()
       .subscribe((res) => {
-        
+
         const status = res.find(i => i.key === 'status');
         const messages = res.find(i => i.key === 'messages');
         if (status?.payload.val() !== 'open' || !messages) return;
@@ -106,17 +76,17 @@ export class CustomerService {
         (messagesPayload).map((item) => {
           const messageItem: any = item;
           const found = this.messages.find((tm: any) => tm.time === messageItem.time);
-          if (!found) { 
-            const newMessageItem = {  
+          if (!found) {
+            const newMessageItem = {
               time: messageItem.time,
-               sender: messageItem.sender, 
-               message: messageItem.message 
+               sender: messageItem.sender,
+               message: messageItem.message
               };
             this.messages.push(newMessageItem);
             this.newMessage.next(newMessageItem);
            }
           return messageItem;
-        }); 
+        });
 
       });
   }
@@ -126,7 +96,7 @@ export class CustomerService {
     this.db.list('chatRooms/' + this.chatRoomId + '/messages').push(newMessageItem);
   }
 
-  
+
   endChat() {
     this.db.list('chatRooms').update(this.chatRoomId, { status: 'closed' });
     this.customerStatus.next('waiting');

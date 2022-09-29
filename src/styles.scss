@@ -1,13 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
-.btn { 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {  font-family: Open Sans }
+
+.btn {
     padding: 5px 10px; border: 1px solid #999; background: #eee; cursor: pointer;
-    border-radius: 5px; 
+    border-radius: 5px;
     &.big { font-size: 24px; width: 100%; }
     &.positive { background-color: darkgreen; color: white; font-weight: 100; }
 }
 
-.messages-box { 
+.messages-box {
     background-color: white;
     padding: 10px; margin-bottom: 10px; padding-right: 0px; height: 400px;
     display: flex; align-items: flex-end;
@@ -18,7 +23,7 @@
         display: inline-block; background-color: #57c28e;  padding: 5px 10px;
         border-radius: 5px; color: white;
     }
-    &.agent { 
+    &.agent {
         text-align: left;
         .inner {
             background-color: #748ccc;
@@ -28,7 +33,7 @@
 
 .input-box {
     form {  display: flex; }
-    .col {    
+    .col {
         display: flex;
         &:nth-child(1) { flex-grow: 1; padding-right: 10px; }
     }

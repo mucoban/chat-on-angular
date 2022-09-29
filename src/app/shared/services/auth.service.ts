@@ -7,57 +7,41 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  userData: any; 
-  isUserSingedIn = new Subject<boolean>();
-  
+  userData: any;
+  isFbUserSingedIn = new Subject<boolean>();
+
+  private fbUser = 'fbUser';
+
   constructor(
-    public afs: AngularFirestore,   // Inject Firestore service
-    public afAuth: AngularFireAuth, // Inject Firebase auth service
-    /* public router: Router,  
-    public ngZone: NgZone // NgZone service to remove outside scope warning
-   */) {
+    public afs: AngularFirestore,
+    public afAuth: AngularFireAuth,
+    ) {  }
+
+  signInCheck() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user') as string);
+        if (localStorage.getItem(this.fbUser)) localStorage.setItem(this.fbUser, 'true');
+        setTimeout(() => { this.isFbUserSingedIn.next(true); }, 0);
       } else {
-        localStorage.removeItem('user');
-        JSON.parse(localStorage.getItem('user') as string);
+        this.signIn('webdeveloper.mucahitcoban@gmail.com', '123123aA.');
       }
-    })
-    }
+    });
+  }
 
-  SignIn(email: string, password: string) { 
+  signIn(email: string, password: string) {
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.isUserSingedIn.next(true);
-      }).catch((error) => {
-        window.alert(error.message)
-      })
+        localStorage.setItem(this.fbUser, 'true');
+        this.isFbUserSingedIn.next(true);
+      }).catch((error) => { console.log(error); })
   }
 
-  SignUp(email: string, password: string) {
-    return this.afAuth.createUserWithEmailAndPassword(email, password)
+  signOut() {
+    return this.afAuth.signOut()
       .then((result) => {
-        console.log(result);
-      }).catch((error) => {
-        window.alert(error.message)
-      })
-  }
-
-  private SetUserData(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    const userData: any = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified
-    }
-    return userRef.set(userData, {
-      merge: true
-    })
+        // localStorage.removeItem(this.fbUser);
+        this.isFbUserSingedIn.next(false);
+      }).catch((error) => console.log);
   }
 
 }
