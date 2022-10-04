@@ -38,21 +38,23 @@ export class CustomerService {
     const o = this.db.list('chatRooms', ref => ref.orderByChild('clientId').equalTo(this.clientId));
     o.snapshotChanges()
       .pipe(first())
-      .subscribe((res) => { debugger
-          res = res.filter(i => (i.payload.val() as any)?.status === 'open');
-          if (!res.length) { console.log('no open chat room'); }
-          else {
-            this.chatRoomId = res[0].key as string;
-            this.initChatRoom();
-          }
+      .subscribe((res) => {
+        res = res.filter(i => (i.payload.val() as any)?.status === 'open');
+        if (!res.length) { console.log('no open chat room'); }
+        else {
+          this.chatRoomId = res[0].key as string;
+          this.initChatRoom();
+        }
       });
   }
 
   createChatRoom() {
     this.db.list('chatRooms').push({
-        agentName:"agent_a",
-        clientId:"t4if2rc4",
+        isAgent: 0,
+        agentName:"",
+        clientId: this.clientId,
         clientName:"cli_aa",
+        date: new Date().toString(),
         status: 'open'
     }).then(res => {
       this.chatRoomId = res.key as string;

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {first} from "rxjs/operators";
+import {AuthService} from "../shared/services/auth.service";
+import {AgentService} from "../shared/services/agent.service";
 
 @Component({
   selector: 'app-agent',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgentComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   ngOnInit(): void {
+
   }
 
 }
