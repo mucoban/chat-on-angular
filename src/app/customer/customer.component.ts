@@ -33,7 +33,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.authService.signInCheck();
+    this.authService.signInCheck({ email: 'mchdcbn10@gmail.com', password: '123123aA.' });;
 
     this.authService.isFbUserSingedIn
       .pipe(first())
@@ -74,9 +74,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
     this.customerService.createChatRoom();
   }
 
-  insertMessage() {
-    console.log(this.inputForm.value);
-    this.customerService.sendMessage(this.inputForm.value.message);
+  insertMessage(message: string) {
+    this.customerService.sendMessage(message);
     this.inputForm.reset();
   }
 

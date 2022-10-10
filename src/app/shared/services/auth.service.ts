@@ -10,28 +10,31 @@ export class AuthService {
   userData: any;
   isFbUserSingedIn = new Subject<boolean>();
 
-  private fbUser = 'fbUser';
+  private fbUser = '';
+  private fbUserLsStr = 'fbUser';
 
   constructor(
     public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
     ) {  }
 
-  signInCheck() {
+  signInCheck(data: { email: string, password: string }) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        if (localStorage.getItem(this.fbUser)) localStorage.setItem(this.fbUser, 'true');
+        if (localStorage.getItem(this.fbUserLsStr)) localStorage.setItem(this.fbUserLsStr, 'true');
         setTimeout(() => { this.isFbUserSingedIn.next(true); }, 0);
       } else {
-        this.signIn('webdeveloper.mucahitcoban@gmail.com', '123123aA.');
+        this.signIn(data.email, data.password);
+        // this.signIn('webdeveloper.mucahitcoban@gmail.com', '123123aA.');
+        // this.signIn('mchdcbn10@gmail.com', '247600gg??');
       }
     });
   }
 
-  signIn(email: string, password: string) {
+  signIn(email: string, password: string) { debugger
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then((result) => {
-        localStorage.setItem(this.fbUser, 'true');
+        localStorage.setItem(this.fbUserLsStr, 'true');
         this.isFbUserSingedIn.next(true);
       }).catch((error) => { console.log(error); })
   }

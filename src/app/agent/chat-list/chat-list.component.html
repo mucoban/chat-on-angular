@@ -1,6 +1,6 @@
 <h4>New Chats <span>Checked 22-22-22</span></h4>
 <div class="chats new">
-  <div class="chat" *ngFor="let chat of newChats">
+  <div class="chat" *ngFor="let chat of newChats" (click)="takeChat(chat.key)">
     <div><b>Client Name:</b> {{ chat.date }}</div>
     <div><b>Message:</b> {{ chat.firstMessage }}</div>
   </div>

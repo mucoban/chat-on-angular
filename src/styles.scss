@@ -12,34 +12,6 @@
     &.positive { background-color: darkgreen; color: white; font-weight: 100; }
 }
 
-.messages-box {
-    background-color: white;
-    padding: 10px; margin-bottom: 10px; padding-right: 0px; height: 400px;
-    display: flex; align-items: flex-end;
- }
-.message {
-    margin-bottom: 5px; text-align: right; padding-right: 10px;
-    .inner {
-        display: inline-block; background-color: #57c28e;  padding: 5px 10px;
-        border-radius: 5px; color: white;
-    }
-    &.agent {
-        text-align: left;
-        .inner {
-            background-color: #748ccc;
-        }
-     }
-}
-
-.input-box {
-    form {  display: flex; }
-    .col {
-        display: flex;
-        &:nth-child(1) { flex-grow: 1; padding-right: 10px; }
-    }
-    input { width: 100%; outline: none; padding: 5px 10px; border: 1px solid #ccc; }
-}
-
 .action-buttons {
      text-align: right;
  }
