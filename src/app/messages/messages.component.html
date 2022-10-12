@@ -1,21 +1,24 @@
-<div class="action-buttons">
-  <button class="btn">-</button>
-  <button class="btn">X</button>
+<div [ngClass]="{ 'sender-agent': isAgent }">
+  <div class="action-buttons">
+    <button class="btn">-</button>
+    <button class="btn">X</button>
+  </div>
+  <div class="messages-box">
+    <perfect-scrollbar style="max-height: 400px;" [style]="{ 'max-width': isAgent ? 'auto' : '600px' }" fxFlex="auto" >
+      <div class="message" *ngFor="let message of messages" [ngClass]="{ 'agent': message.sender === 'agent' }">
+        <div class="inner">{{ message?.message }} <span class="dateText">{{ message?.dateText }}</span></div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+  <div class="input-box">
+    <form [formGroup]="inputForm" (submit)="sendMessage()">
+      <div class="col">
+        <input type="text" placeholder="message" formControlName="message">
+      </div>
+      <div class="col">
+        <button class="btn">Send</button>
+      </div>
+    </form>
+  </div>
 </div>
-<div class="messages-box">
-  <perfect-scrollbar style="max-width: 600px; max-height: 400px;" fxFlex="auto" >
-    <div class="message" *ngFor="let message of messages" [ngClass]="{ 'agent': message.sender === 'agent' }">
-      <div class="inner">{{ message?.message }}</div>
-    </div>
-  </perfect-scrollbar>
-</div>
-<div class="input-box">
-  <form [formGroup]="inputForm" (submit)="sendMessage()">
-    <div class="col">
-      <input type="text" placeholder="message" formControlName="message">
-    </div>
-    <div class="col">
-      <button class="btn">Send</button>
-    </div>
-  </form>
-</div>
+

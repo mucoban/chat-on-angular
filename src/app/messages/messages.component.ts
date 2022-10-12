@@ -13,6 +13,7 @@ export class MessagesComponent implements OnInit {
     "message": new FormControl()
   });
 
+  @Input() isAgent: boolean;
   @Input() messages: MessageModel[];
   @Output() messageSent: EventEmitter<string> = new EventEmitter<string>();
 

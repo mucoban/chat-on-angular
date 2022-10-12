@@ -8,6 +8,7 @@
   .inner {
     display: inline-block; background-color: #57c28e;  padding: 5px 10px;
     border-radius: 5px; color: white;
+    .dateText { font-size: 9px; }
   }
   &.agent {
     text-align: left;
@@ -24,4 +25,11 @@
     &:nth-child(1) { flex-grow: 1; padding-right: 10px; }
   }
   input { width: 100%; outline: none; padding: 5px 10px; border: 1px solid #ccc; }
+}
+
+.sender-agent {
+  .message {
+    text-align: left;
+    &.agent { text-align: right; }
+  }
 }

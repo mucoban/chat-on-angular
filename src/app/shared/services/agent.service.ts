@@ -44,8 +44,11 @@ export class AgentService {
           const messageItem: any = item;
           const found = this.messages.find((tm: any) => tm.time === messageItem.time);
           if (!found) {
+            const newDate = new Date(messageItem.time);
+            const dateText = newDate.toTimeString().substr(0, 5);
             const newMessageItem = {
               time: messageItem.time,
+              dateText: dateText,
               sender: messageItem.sender,
               message: messageItem.message
             };
@@ -60,7 +63,7 @@ export class AgentService {
 
 
   sendMessage(chatId: string, message: string) {
-    const newMessageItem: MessageModel  = { time: new Date().getTime(), sender: 'client', message: message };
+    const newMessageItem: MessageModel  = { time: new Date().getTime(), sender: 'agent', message: message };
     this.db.list('chatRooms/' + chatId + '/messages').push(newMessageItem);
   }
 
