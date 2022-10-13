@@ -1,7 +1,8 @@
-<ng-container *ngIf="customerStatus === 'waiting'">
-    <button class="btn big positive" (click)="createChatRoom()">Chate başla</button>
-</ng-container>
+<button class="btn big positive" *ngIf="customerStatus === 'waiting'" (click)="createChatRoom()">Chate başla</button>
+<button class="btn big positive" *ngIf="customerStatus === 'minimized'" (click)="customerStatus = 'chat-started'">Chate devam et</button>
+
 
 <ng-container *ngIf="customerStatus === 'chat-started'">
-  <app-messages [messages]="messages" (messageSent)="insertMessage($event)"></app-messages>
+  <app-messages [messages]="messages" [newMessages]="newMessages"
+                (closeChat)="customerStatus = 'minimized'" (messageSent)="insertMessage($event)"></app-messages>
 </ng-container>

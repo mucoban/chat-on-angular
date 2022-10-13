@@ -50,10 +50,8 @@ export class CustomerService {
 
   createChatRoom() {
     this.db.list('chatRooms').push({
-        isAgent: 0,
-        agentName:"",
+        isAgent: false,
         clientId: this.clientId,
-        clientName:"cli_aa",
         date: new Date().toString(),
         status: 'open'
     }).then(res => {

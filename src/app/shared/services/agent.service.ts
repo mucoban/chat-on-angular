@@ -19,13 +19,23 @@ export class AgentService {
   ) { }
 
 
-  getChats() {
-    const o = this.db.list('chatRooms', ref => ref.orderByChild('timestamp'));
+  getAgentsChats(uid: string) {
+    const o = this.db.list('chatRooms', ref => ref.orderByChild('agentUid').equalTo(uid));
     return o.snapshotChanges();
   }
 
-  takeChat(id: string) {
-    return this.db.list('chatRooms').update(id, { isAgent: true, agenntId: 123 });
+  getNewChats() {
+    const o = this.db.list('chatRooms', ref => ref.orderByChild('isAgent').equalTo(false));
+    return o.snapshotChanges();
+  }
+
+  takeChat(uid: string, id: string) {
+    return this.db.list('chatRooms').update(id, { isAgent: true, agentUid: uid});
+  }
+
+
+  closeChat(id: string) {
+    return this.db.list('chatRooms').update(id, { status: 'closed' });
   }
 
   enterChat(chatId: string) {

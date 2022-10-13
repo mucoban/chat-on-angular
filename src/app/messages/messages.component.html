@@ -1,7 +1,6 @@
 <div [ngClass]="{ 'sender-agent': isAgent }">
   <div class="action-buttons">
-    <button class="btn">-</button>
-    <button class="btn">X</button>
+    <button class="btn" (click)="onClickcloseChat()">X</button>
   </div>
   <div class="messages-box">
     <perfect-scrollbar style="max-height: 400px;" [style]="{ 'max-width': isAgent ? 'auto' : '600px' }" fxFlex="auto" >

@@ -15,12 +15,10 @@ import {AuthService} from "../shared/services/auth.service";
 })
 export class CustomerComponent implements OnInit, OnDestroy {
 
-  @ViewChild(PerfectScrollbarComponent) perfectScrollbarComponent?: PerfectScrollbarComponent;
-  @ViewChild(PerfectScrollbarDirective) perfectScrollbarDirective?: PerfectScrollbarDirective;
-
   private destroy$ = new Subject<boolean>();
   customerStatus: String = 'waiting';
   messages: MessageModel[] = [];
+  newMessages: number = 0;
 
   inputForm = new FormGroup({
     "message": new FormControl()
@@ -64,7 +62,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         this.messages.push(res);
-        setTimeout(() => { this.scrollToBottom(); }, 100);
+        this.newMessages++;
       });
 
     this.customerService.initCustomer();
@@ -82,10 +80,6 @@ export class CustomerComponent implements OnInit, OnDestroy {
   endChat() {
     this.customerService.endChat();
     this.messages = [];
-  }
-
-  private scrollToBottom() {
-    (this.perfectScrollbarComponent as any)?.directiveRef.scrollToBottom();
   }
 
 }

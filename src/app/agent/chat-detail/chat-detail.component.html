@@ -1,2 +1,4 @@
-<p>chat-detail works!</p>
-<app-messages [isAgent]="true" [messages]="messages" (messageSent)="sendMessage($event)"></app-messages>
+<a routerLink="/agent/chats">back</a>
+
+<app-messages [isAgent]="true" [newMessages]="newMessages" [messages]="messages"
+              (closeChat)="closeChat()" (messageSent)="sendMessage($event)"></app-messages>

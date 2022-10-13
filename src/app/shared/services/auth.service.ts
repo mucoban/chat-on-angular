@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  userData: any;
+  user: any;
   isFbUserSingedIn = new Subject<boolean>();
 
   private fbUser = '';
@@ -21,6 +21,7 @@ export class AuthService {
   signInCheck(data: { email: string, password: string }) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
+        this.user = {uid: user.uid};
         if (localStorage.getItem(this.fbUserLsStr)) localStorage.setItem(this.fbUserLsStr, 'true');
         setTimeout(() => { this.isFbUserSingedIn.next(true); }, 0);
       } else {

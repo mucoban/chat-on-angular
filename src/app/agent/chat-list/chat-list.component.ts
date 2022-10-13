@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AgentService} from "../../shared/services/agent.service";
-import {first} from "rxjs/operators";
+import {first, takeUntil} from "rxjs/operators";
 import {AuthService} from "../../shared/services/auth.service";
 import {Router} from "@angular/router";
+import {Subject} from "rxjs";
 
 interface ChatList {
   key: string,
@@ -15,10 +16,12 @@ interface ChatList {
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.scss']
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent implements OnInit, OnDestroy {
 
   newChats: ChatList[];
+  activeChats: ChatList[];
   closedChats: ChatList[];
+  private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private authService: AuthService,
@@ -33,31 +36,51 @@ export class ChatListComponent implements OnInit {
     this.authService.isFbUserSingedIn
       .pipe(first())
       .subscribe(result => {
-        this.agentService.getChats()
-          .pipe(first())
+
+        this.agentService.getNewChats()
+          .pipe(takeUntil(this.destroy$))
           .subscribe((res) => {
-            const chats = res.map(i => {
-              const chat = i.payload.val() as any;
-              chat.key = i.key;
-              chat.date = new Date(chat.date).toLocaleString();
-              chat.firstMessage = '';
-              if (chat.messages) {
-                chat.messagesArray = Object.values(chat.messages);
-                chat.firstMessage = chat.messagesArray[0] ? chat.messagesArray[0].message : '';
-              }
-              return chat;
-            });
-            const newChats = chats.filter((i: any)  => !i.isAgent && i.status === 'open');
-            const takenChats = chats.filter((i: any) => !i.isAgent && i.status === 'open');
-            const closedChats = chats.filter((i: any) => i.status !== 'open');
+            const chats = this.processChats(res);
+            const newChats = chats.filter((i: any) => i.status === 'open');
             this.newChats = newChats as any;
+        });
+
+        this.agentService.getAgentsChats(this.authService.user.uid)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((res) => {
+            const chats = this.processChats(res);
+            const activeChats = chats.filter((i: any) => i.status === 'open');
+            const closedChats = chats.filter((i: any) => i.status !== 'open');
+            this.activeChats = activeChats as any;
             this.closedChats = closedChats as any;
-        });;
+        });
+
       });
   }
 
-  takeChat(id: string) { debugger
-    this.agentService.takeChat(id).then(result => { this.router.navigate(['agent/chats/' + id]) });
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
+  takeChat(id: string) {
+    this.agentService.takeChat(this.authService.user.uid, id)
+      .then(result => { this.router.navigate(['agent/chats/' + id]) });
+  }
+
+  private processChats(res: any) {
+    const chats = res.map((i: any) => {
+      const chat = i.payload.val() as any;
+      chat.key = i.key;
+      chat.date = new Date(chat.date).toLocaleString();
+      chat.firstMessage = '';
+      if (chat.messages) {
+        chat.messagesArray = Object.values(chat.messages);
+        chat.firstMessage = chat.messagesArray[0] ? chat.messagesArray[0].message : '';
+      }
+      return chat;
+    });
+    return chats;
   }
 
 }
