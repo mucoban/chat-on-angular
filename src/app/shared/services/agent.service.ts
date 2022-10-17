@@ -2,8 +2,10 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFireDatabase} from '@angular/fire/database';
-import {Subject} from "rxjs";
+import {Subject, throwError} from "rxjs";
 import {MessageModel} from "../models/message.model";
+import {catchError} from "rxjs/operators";
+import {AuthService} from "./auth.service";
 
 
 @Injectable()
@@ -15,18 +17,19 @@ export class AgentService {
   constructor(
     public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
+    private authService: AuthService,
   ) { }
 
 
   getAgentsChats(uid: string) {
     const o = this.db.list('chatRooms', ref => ref.orderByChild('agentUid').equalTo(uid));
-    return o.snapshotChanges();
+    return o.snapshotChanges().pipe(catchError((err) => this.handleError(err)));
   }
 
   getNewChats() {
     const o = this.db.list('chatRooms', ref => ref.orderByChild('isAgent').equalTo(false));
-    return o.snapshotChanges();
+    return o.snapshotChanges().pipe(catchError((err) => this.handleError(err)));
   }
 
   takeChat(uid: string, id: string) {
@@ -42,6 +45,7 @@ export class AgentService {
     this.messages = [];
     const o = this.db.list('chatRooms/' + chatId);
     o.snapshotChanges()
+      .pipe(catchError((err) => this.handleError(err)))
       .subscribe((res) => {
         const status = res.find(i => i.key === 'status');
         const messages = res.find(i => i.key === 'messages');
@@ -75,6 +79,11 @@ export class AgentService {
   sendMessage(chatId: string, message: string) {
     const newMessageItem: MessageModel  = { time: new Date().getTime(), sender: 'agent', message: message };
     this.db.list('chatRooms/' + chatId + '/messages').push(newMessageItem);
+  }
+
+  private handleError(error: any) {
+    // if (error.code === 'PERMISSION_DENIED') { this.authService.signOut(); }
+    return throwError(error.message);
   }
 
 }

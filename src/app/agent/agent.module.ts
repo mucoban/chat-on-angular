@@ -6,6 +6,9 @@ import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatDetailComponent } from './chat-detail/chat-detail.component';
 import {AgentService} from "../shared/services/agent.service";
 import {SharedModule} from "../shared/shared.module";
+import { LoginComponent } from './login/login.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {AgentAuthGuard} from "./agent-auth.guard";
 
 
 
@@ -13,19 +16,22 @@ import {SharedModule} from "../shared/shared.module";
   declarations: [
     AgentComponent,
     ChatListComponent,
-    ChatDetailComponent
+    ChatDetailComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       { path: '', redirectTo: 'chats', pathMatch: "full"},
-      { path: '', component: AgentComponent, children: [
+      { path: 'login', component: LoginComponent },
+      { path: '', canActivate: [ AgentAuthGuard ], component: AgentComponent, children: [
           { path: 'chats', component: ChatListComponent },
           { path: 'chats/:id', component: ChatDetailComponent },
         ] },
     ]),
-    SharedModule
+    SharedModule,
   ],
-  providers: [ AgentService ]
+  providers: [ AgentService, AgentAuthGuard ]
 })
 export class AgentModule { }

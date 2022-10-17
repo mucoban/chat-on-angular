@@ -31,7 +31,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.authService.signInCheck({ email: 'mchdcbn10@gmail.com', password: '123123aA.' });;
+    this.authService.signInCheckRemote({ email: 'mchdcbn10@gmail.com', password: '123123aA.' });;
 
     this.authService.isFbUserSingedIn
       .pipe(first())

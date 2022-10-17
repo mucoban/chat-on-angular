@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {first} from "rxjs/operators";
 import {AuthService} from "../shared/services/auth.service";
-import {AgentService} from "../shared/services/agent.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-agent',
@@ -11,11 +11,14 @@ import {AgentService} from "../shared/services/agent.service";
 export class AgentComponent implements OnInit {
 
   constructor(
+    private router: Router,
     private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
 
   }
+
+  onLogout() { this.authService.signOut(); }
 
 }

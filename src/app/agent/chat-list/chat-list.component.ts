@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AgentService} from "../../shared/services/agent.service";
-import {first, takeUntil} from "rxjs/operators";
+import {catchError, first, takeUntil} from "rxjs/operators";
 import {AuthService} from "../../shared/services/auth.service";
 import {Router} from "@angular/router";
-import {Subject} from "rxjs";
+import {Subject, throwError} from "rxjs";
 
 interface ChatList {
   key: string,
@@ -18,9 +18,9 @@ interface ChatList {
 })
 export class ChatListComponent implements OnInit, OnDestroy {
 
-  newChats: ChatList[];
-  activeChats: ChatList[];
-  closedChats: ChatList[];
+  newChats: ChatList[] =  [];
+  activeChats: ChatList[] = [];
+  closedChats: ChatList[] = [];
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -30,8 +30,8 @@ export class ChatListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    // this.authService.signOut();
-    this.authService.signInCheck({ email: 'webdeveloper.mucahitcoban@gmail.com', password: '123123aA.' });
+    this.authService.signInCheckRemote();
+    // { email: 'webdeveloper.mucahitcoban@gmail.com', password: '123123aA.' }
 
     this.authService.isFbUserSingedIn
       .pipe(first())

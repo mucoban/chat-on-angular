@@ -1,0 +1,4 @@
+.form-wrapper { text-align: center; }
+form { text-align: left; display: inline-block; }
+.group { margin-bottom: 15px; &:last-child { text-align: right; } }
+.error { background-color: #b63030; padding: 5px; border-radius: 5px; color: white; margin-bottom: 15px; width: min-content; }

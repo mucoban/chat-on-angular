@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {Subject} from 'rxjs';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -10,42 +10,53 @@ export class AuthService {
   user: any;
   isFbUserSingedIn = new Subject<boolean>();
 
-  private fbUser = '';
   private fbUserLsStr = 'fbUser';
 
   constructor(
-    public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
+    public router: Router,
     ) {  }
 
-  signInCheck(data: { email: string, password: string }) {
+  get _isAgentSignedIn(): boolean {
+    return Boolean(localStorage.getItem(this.fbUserLsStr));
+  }
+
+  signInCheckRemote(data?: { email: string, password: string }) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = {uid: user.uid};
-        if (localStorage.getItem(this.fbUserLsStr)) localStorage.setItem(this.fbUserLsStr, 'true');
+        localStorage.setItem(this.fbUserLsStr, '1');
         setTimeout(() => { this.isFbUserSingedIn.next(true); }, 0);
       } else {
-        this.signIn(data.email, data.password);
-        // this.signIn('webdeveloper.mucahitcoban@gmail.com', '123123aA.');
-        // this.signIn('mchdcbn10@gmail.com', '247600gg??');
+        if (data) this.signIn(data.email, data.password);
+        else this.signOut();
       }
     });
   }
 
-  signIn(email: string, password: string) { debugger
-    return this.afAuth.signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        localStorage.setItem(this.fbUserLsStr, 'true');
-        this.isFbUserSingedIn.next(true);
-      }).catch((error) => { console.log(error); })
+  signIn(email: string, password: string) {
+    const promise = new Promise((resolve, reject) => {
+      this.afAuth.signInWithEmailAndPassword(email, password)
+        .then((result) => {
+          localStorage.setItem(this.fbUserLsStr, '1');
+          this.isFbUserSingedIn.next(true);
+          resolve('');
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error.message);
+          localStorage.setItem(this.fbUserLsStr, '');
+        });
+    });
+
+    return promise;
   }
 
   signOut() {
-    return this.afAuth.signOut()
-      .then((result) => {
-        // localStorage.removeItem(this.fbUser);
-        this.isFbUserSingedIn.next(false);
-      }).catch((error) => console.log);
+    this.afAuth.signOut().then(() => {
+      localStorage.setItem(this.fbUserLsStr, '');
+      this.router.navigate(['/agent/login']);
+    });
   }
 
 }
