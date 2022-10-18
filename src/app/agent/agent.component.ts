@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {first} from "rxjs/operators";
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {AuthService} from "../shared/services/auth.service";
 import {Router} from "@angular/router";
 
@@ -13,10 +12,12 @@ export class AgentComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private renderer2: Renderer2,
   ) { }
 
   ngOnInit(): void {
-
+    this.renderer2.setStyle(document.body, 'width', 'auto');
+    this.renderer2.setStyle(document.body, 'position', 'static');
   }
 
   onLogout() { this.authService.signOut(); }

@@ -82,7 +82,7 @@ export class AgentService {
   }
 
   private handleError(error: any) {
-    // if (error.code === 'PERMISSION_DENIED') { this.authService.signOut(); }
+    if (error.code === 'PERMISSION_DENIED') { this.authService.signOut(); }
     return throwError(error.message);
   }
 

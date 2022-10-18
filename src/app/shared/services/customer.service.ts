@@ -1,17 +1,14 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Subject } from 'rxjs';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
-import { first } from 'rxjs/operators';
-import { MessageModel } from '../models/message.model';
+import {Injectable} from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {Subject} from 'rxjs';
+import {AngularFireDatabase} from '@angular/fire/database';
+import {first} from 'rxjs/operators';
+import {MessageModel} from '../models/message.model';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CustomerService {
-  userData: any;
   customerStatus = new Subject<string>();
   newMessage = new Subject<{time: number, sender: string, message: string}>();
   private messages: MessageModel[] = [];
