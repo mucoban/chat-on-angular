@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
@@ -14,7 +14,8 @@ import {AuthService} from "../shared/services/auth.service";
 export class CustomerComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<boolean>();
-  customerStatus: String = 'waiting';
+  private isParentMobile: boolean;
+  customerStatus: string = 'waiting';
   messages: MessageModel[] = [];
   newMessages: number = 0;
 
@@ -35,6 +36,13 @@ export class CustomerComponent implements OnInit, OnDestroy {
       .subscribe(result => {
       if (result) this.continueToInit();
     });
+
+  }
+
+  @HostListener('window:message', ['$event'])
+  onMessage(event: any) {
+    if (event.data.innerWidth) this.isParentMobile = event.data.innerWidth < 992;
+    this.setCustomerStatus(this.customerStatus);
   }
 
   ngOnDestroy(): void {
@@ -43,8 +51,19 @@ export class CustomerComponent implements OnInit, OnDestroy {
   }
 
   setCustomerStatus(status: string) {
-    if (status === 'chat-started') { parent.postMessage([{ prop: 'height', value: '495px' }], "*"); }
-    else { parent.postMessage([{ prop: 'height', value: '70px' }], "*"); }
+    if (status === 'chat-started') {
+      if (this.isParentMobile) parent.postMessage([
+          { prop: 'width', value: '100%' },
+          { prop: 'height', value: '100%' },
+        ], "*");
+      else parent.postMessage([{ prop: 'width', value: '304px' }, { prop: 'height', value: '565px' }], "*");
+    }
+    else {
+      parent.postMessage([
+        { prop: 'width', value: '100px' },
+        { prop: 'height', value: '90px' },
+      ], "*");
+    }
     this.customerStatus = status;
   }
 

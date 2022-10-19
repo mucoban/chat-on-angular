@@ -1,0 +1,26 @@
+.switch-btn {
+  background-color: #4f4fb9;
+  width: 75px;
+  height: 75px;
+  border-radius: 1000px;
+  border: 0; cursor: pointer;
+  float: right;
+  margin: 10px 10px 10px 0;
+  &:hover { border: 0; }
+  img { width: 56px; transition: opacity .3s .3s; }
+  .close-icon {
+    width: 50px;    display: inline-block;    margin-top: -34px;
+    vertical-align: top;    float: left;    margin-left: 6px;
+    span {  opacity: 0; transition: all .3s .0s; }
+    span:nth-child(1) { display: block; height: 3px; background-color: black; transform: translate(-10px, -7px) rotate(45deg); }
+    span:nth-child(2) { display: block; height: 3px; background-color: black; transform: translate(10px, -10px) rotate(-45deg); }
+  }
+  &.close-on {
+    img { opacity: 0;  transition-delay: .0s; }
+    .close-icon {
+      span { opacity: 1; transition-delay: .3s; }
+      span:nth-child(1) { transform: translate(0px, 3px) rotate(45deg); }
+      span:nth-child(2) { transform: translate(0px, 0px) rotate(-45deg); }
+    }
+  }
+}

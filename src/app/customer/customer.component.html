@@ -1,9 +1,14 @@
-<button class="btn big positive" *ngIf="customerStatus !== 'chat-started'"
-        (click)="customerStatus === 'waiting' ? createChatRoom() : setCustomerStatus('chat-started') ">☎</button>
-
-
 <ng-container *ngIf="customerStatus === 'chat-started'">
   <app-messages [messages]="messages" [newMessages]="newMessages"
-                (closeChat)="setCustomerStatus('minimized')"
                 (messageSent)="insertMessage($event)"></app-messages>
 </ng-container>
+
+<button class="switch-btn" [ngClass]="{ 'close-on': customerStatus === 'chat-started' }"
+        (click)="customerStatus === 'chat-started' ? setCustomerStatus('minimized') :
+        customerStatus === 'waiting' ? createChatRoom() : setCustomerStatus('chat-started')">
+  <img src="assets/images/mail.svg" alt="mail">
+  <span class="close-icon">
+    <span></span>
+    <span></span>
+  </span>
+</button>
