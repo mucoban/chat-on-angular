@@ -24,8 +24,8 @@ import {AgentAuthGuard} from "./agent-auth.guard";
     ReactiveFormsModule,
     RouterModule.forChild([
       { path: '', redirectTo: 'chats', pathMatch: "full"},
-      { path: 'login', component: LoginComponent },
       { path: '', canActivate: [ AgentAuthGuard ], component: AgentComponent, children: [
+          { path: 'login', component: LoginComponent, data: { noGuard: true } },
           { path: 'chats', component: ChatListComponent },
           { path: 'chats/:id', component: ChatDetailComponent },
         ] },

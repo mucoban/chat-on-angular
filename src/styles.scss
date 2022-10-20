@@ -13,12 +13,23 @@ body {
 }
 
 .btn {
-    padding: 5px 10px; border: 1px solid #999; background: #eee; cursor: pointer;
-    border-radius: 5px;
+    padding: 5px 10px; border: 1px solid #999; background: #fff; cursor: pointer;
+    border-radius: 5px; transition: all .3s; font-size: 14px; text-decoration: none;
+    &:hover { background-color: #eee; }
     &.big { font-size: 24px; width: 100%; }
     &.positive { background-color: darkgreen; color: white; font-weight: 100; }
+    &.positive2 { background-color: #217fca; color: white; font-weight: 100; padding: 5px 30px; }
 }
 
 .action-buttons {
      text-align: right;
  }
+
+.container {
+  width: 100%;
+  max-width: 1170px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}

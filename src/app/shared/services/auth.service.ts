@@ -55,6 +55,7 @@ export class AuthService {
   signOut() {
     this.afAuth.signOut().then(() => {
       localStorage.setItem(this.fbUserLsStr, '');
+      this.isFbUserSingedIn.next(false);
       this.router.navigate(['/agent/login']);
     });
   }

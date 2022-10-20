@@ -1,26 +1,29 @@
-<h4>New Chats <span>Checked 22-22-22</span></h4>
-<div class="chats new">
-  <div class="chat" *ngFor="let chat of newChats" (click)="takeChat(chat.key)">
-    <div><b>Client Name:</b> {{ chat.date }}</div>
-    <div><b>Message:</b> {{ chat.firstMessage }}</div>
+<div class="container">
+  <h4>New Chats</h4>
+  <div class="chats new">
+    <div class="chat" *ngFor="let chat of newChats" (click)="takeChat(chat.key)">
+      <div><b>Client Name:</b> {{ chat.date }}</div>
+      <div><b>Message:</b> {{ chat.firstMessage }}</div>
+    </div>
+    <p *ngIf="!newChats.length">No new chats</p>
   </div>
-  <p *ngIf="!newChats.length">No new chats</p>
+
+  <h4>Active Chats</h4>
+  <div class="chats new">
+    <a class="chat" *ngFor="let chat of activeChats" [routerLink]="'/agent/chats/' + chat.key">
+      <div><b>Client Name:</b> {{ chat.date }}</div>
+      <div><b>Message:</b> {{ chat.firstMessage }}</div>
+    </a>
+    <p *ngIf="!activeChats.length">No active chats</p>
+  </div>
+
+  <h4>Closed Chats</h4>
+  <div class="chats old">
+    <div class="chat" *ngFor="let chat of closedChats">
+      <div><b>Client Name:</b> {{ chat.date }}</div>
+      <div><b>Message:</b> {{ chat.firstMessage }}</div>
+    </div>
+    <p *ngIf="!closedChats.length">No closed chats</p>
+  </div>
 </div>
 
-<h4>Active Chats <span>Checked 22-22-22</span></h4>
-<div class="chats new">
-  <a class="chat" *ngFor="let chat of activeChats" [routerLink]="'/agent/chats/' + chat.key">
-    <div><b>Client Name:</b> {{ chat.date }}</div>
-    <div><b>Message:</b> {{ chat.firstMessage }}</div>
-  </a>
-  <p *ngIf="!activeChats.length">No active chats</p>
-</div>
-
-<h4>Closed Chats</h4>
-<div class="chats old">
-  <div class="chat" *ngFor="let chat of closedChats">
-    <div><b>Client Name:</b> {{ chat.date }}</div>
-    <div><b>Message:</b> {{ chat.firstMessage }}</div>
-  </div>
-  <p *ngIf="!closedChats.length">No closed chats</p>
-</div>

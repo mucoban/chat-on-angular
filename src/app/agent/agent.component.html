@@ -1,2 +1,11 @@
-<button class="btn" (click)="onLogout()">&#8683; Log out</button>
+<div class="header" *ngIf="isAgentLoggedIn">
+  <div class="logo">
+    <div>Chat on Angular</div>
+    <div>Agent Panel</div>
+  </div>
+  <a class="btn" routerLink="/agent/chats">Chats</a>
+  <div class="logout-holder">
+    <button class="btn logout" (click)="onLogout()">&#8683; Log out</button>
+  </div>
+</div>
 <router-outlet></router-outlet>

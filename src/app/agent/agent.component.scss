@@ -1,1 +1,15 @@
-button { float: right; cursor: pointer }
+.logout { align-self: flex-end; cursor: pointer; &-holder { flex-grow: 1; text-align: right; } }
+.header {
+  padding: 10px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  display: flex; align-items: center; z-index: 2; position: relative;
+}
+.clear { clear: both; }
+.logo { margin-right: 15px; display: inline-block; text-align: center;
+  > * {
+    font-size: 14px; font-weight: 600;
+    &:nth-child(1) { font-size: 14px; }
+    &:nth-child(2) { font-size: 14px; }
+  }
+}
+

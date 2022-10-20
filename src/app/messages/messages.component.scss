@@ -13,15 +13,9 @@
 .message {
   margin-bottom: 5px; text-align: right; padding-right: 10px;
   .inner {
-    display: inline-block; background-color: #57c28e;  padding: 5px 10px;
+    display: inline-block; background-color: #57c28e;  padding: 5px 10px; max-width: 500px;
     border-radius: 5px; color: white;
     .dateText { font-size: 9px; }
-  }
-  &.agent {
-    text-align: left;
-    .inner {
-      background-color: #748ccc;
-    }
   }
 }
 
@@ -37,6 +31,10 @@
 .sender-agent {
   .message {
     text-align: left;
-    &.agent { text-align: right; }
+    &.agent { text-align: right;
+      .inner {
+        background-color: #748ccc;
+      }
+    }
   }
 }

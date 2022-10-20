@@ -14,7 +14,7 @@ export class AgentAuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
     : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService._isAgentSignedIn) return true;
+    if (this.authService._isAgentSignedIn || (route.children && route.children[0].data?.noGuard)) return true;
     else return this.router.createUrlTree(['agent/login'])
   }
 }

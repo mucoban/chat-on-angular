@@ -1,4 +1,17 @@
-.form-wrapper { text-align: center; }
+.main-wrapper { display: flex; justify-content: center;
+  align-items: center; align-content: center;
+  height: 100vh; flex-wrap: wrap; flex-direction: column;
+  background: url("../../../assets/images/bg.jpg") center; background-size: cover;
+}
+h1, h2, h3, h4, h5, h6
+{ text-align: center; margin: 0; }
+h3 { margin-bottom: 45px; }
+.form-wrapper { text-align: center; background-color: #fff;
+  box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.2);
+  padding: 40px 30px 20px; border-radius: 5px; }
 form { text-align: left; display: inline-block; }
 .group { margin-bottom: 15px; &:last-child { text-align: right; } }
-.error { background-color: #b63030; padding: 5px; border-radius: 5px; color: white; margin-bottom: 15px; width: min-content; }
+.error { background-color: #b63030; padding: 5px; border-radius: 5px; color: white;
+  margin-bottom: 15px; width: 300px; }
+input { border: 1px solid #ccc; width: 200px; outline: none !important; padding: 6px 10px; }
+label { font-weight: 400; margin-bottom: 5px; display: inline-block; }
