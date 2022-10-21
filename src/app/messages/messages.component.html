@@ -3,7 +3,7 @@
     <button class="btn" *ngIf="isAgent" (click)="onClickcloseChat()">X</button>
   </div>
   <div class="messages-box">
-    <perfect-scrollbar style="max-height: 380px;" [style]="{ 'max-width': isAgent ? 'auto' : '600px' }" fxFlex="auto" >
+    <perfect-scrollbar style="max-height: 380px;" fxFlex="auto" >
       <div class="message" *ngFor="let message of messages" [ngClass]="{ 'agent': message.sender === 'agent' }">
         <div class="inner">{{ message?.message }} <span class="dateText">{{ message?.dateText }}</span></div>
       </div>

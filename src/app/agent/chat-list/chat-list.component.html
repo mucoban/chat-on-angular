@@ -1,6 +1,6 @@
 <div class="container">
   <h4>New Chats</h4>
-  <div class="chats new">
+  <div class="chats">
     <div class="chat" *ngFor="let chat of newChats" (click)="takeChat(chat.key)">
       <div><b>Client Name:</b> {{ chat.date }}</div>
       <div><b>Message:</b> {{ chat.firstMessage }}</div>
@@ -9,7 +9,7 @@
   </div>
 
   <h4>Active Chats</h4>
-  <div class="chats new">
+  <div class="chats active">
     <a class="chat" *ngFor="let chat of activeChats" [routerLink]="'/agent/chats/' + chat.key">
       <div><b>Client Name:</b> {{ chat.date }}</div>
       <div><b>Message:</b> {{ chat.firstMessage }}</div>

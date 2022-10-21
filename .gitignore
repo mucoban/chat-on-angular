@@ -1,8 +1,10 @@
 /notes
-!/dist/wrapper.html
+/src/environments/*
+!/src/environments/environment.example.ts
 
 # compiled output
 /dist
+/docs
 /tmp
 /out-tsc
 # Only exists if Bazel was run

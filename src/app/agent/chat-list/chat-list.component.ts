@@ -31,7 +31,6 @@ export class ChatListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authService.signInCheckRemote();
-    // { email: 'webdeveloper.mucahitcoban@gmail.com', password: '123123aA.' }
 
     this.authService.isFbUserSingedIn
       .pipe(first())

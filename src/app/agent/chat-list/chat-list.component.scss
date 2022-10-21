@@ -2,6 +2,9 @@ h4 { font-weight: 600; color: #333;
   span { font-size: 12px; font-weight: 400; margin-left: 15px; }
 }
 .chats { margin-bottom: 15px; display: flex; flex-wrap: wrap;
+  &.active {
+    .chat { border-color: #aaa; background-color: #66bb3d; }
+  }
   &.old {
     .chat { border-color: #aaa; background-color: #bbdbef; }
   }

@@ -17,6 +17,11 @@
     border-radius: 5px; color: white;
     .dateText { font-size: 9px; }
   }
+  &.agent { text-align: left;
+    .inner {
+      background-color: #748ccc;
+    }
+  }
 }
 
 .input-box {
@@ -33,7 +38,6 @@
     text-align: left;
     &.agent { text-align: right;
       .inner {
-        background-color: #748ccc;
       }
     }
   }

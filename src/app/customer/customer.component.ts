@@ -5,6 +5,7 @@ import {first, takeUntil} from 'rxjs/operators';
 import {MessageModel} from '../shared/models/message.model';
 import {CustomerService} from '../shared/services/customer.service';
 import {AuthService} from "../shared/services/auth.service";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-customer',
@@ -29,7 +30,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.authService.signInCheckRemote({ email: 'mchdcbn10@gmail.com', password: '123123aA.' });
+    this.authService.signInCheckRemote({ email: environment.customer.email, password: environment.customer.password });
 
     this.authService.isFbUserSingedIn
       .pipe(first())
