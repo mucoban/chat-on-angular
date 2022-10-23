@@ -98,6 +98,7 @@ export class CustomerService {
   }
 
   private sendNotificationEmail() {
+    if (environment.formspreeApiUrl)
     this.httpClient.post(environment.formspreeApiUrl, { email: 'a@a.com', message: 'new coa customer has started chating' })
       .subscribe();
   }

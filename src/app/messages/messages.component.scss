@@ -6,7 +6,8 @@
 }
 .messages-box {
   background-color: white;
-  padding: 10px; margin-bottom: 10px; padding-right: 0px; height: 400px;
+  padding: 10px; margin-bottom: 10px; padding-right: 0px;
+  height: calc(100vh - 162px);
   display: flex; align-items: flex-end;
   border: 1px solid #ccc;
 }
