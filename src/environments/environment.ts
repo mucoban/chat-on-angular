@@ -13,7 +13,8 @@ export const environment = {
     messagingSenderId: "384780938719",
     appId: "1:384780938719:web:a55a7ec759064179f1a86a"
   },
-  customer: { email: 'mchdcbn10@gmail.com', password: '123123aA.' }
+  customer: { email: 'mchdcbn10@gmail.com', password: '123123aA.' },
+  formspreeApiUrl: 'https://formspree.io/f/xvoybjvl'
 };
 
 /*

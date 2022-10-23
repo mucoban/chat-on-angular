@@ -13,7 +13,8 @@ export const environment = {
     messagingSenderId: "",
     appId: ""
   },
-  customer: { email: '', password: '' }
+  customer: { email: '', password: '' },
+  formspreeApiUrl: '',
 };
 
 /*

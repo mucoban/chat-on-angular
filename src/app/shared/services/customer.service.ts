@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {Subject} from 'rxjs';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {first} from 'rxjs/operators';
 import {MessageModel} from '../models/message.model';
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
 
 
 @Injectable()
@@ -16,9 +17,9 @@ export class CustomerService {
   private chatRoomId: string = '';
 
   constructor(
-    public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
+    private httpClient: HttpClient,
   ) { }
 
   initCustomer() {
@@ -53,12 +54,17 @@ export class CustomerService {
         status: 'open'
     }).then(res => {
       this.chatRoomId = res.key as string;
-      this.initChatRoom();
+      this.initChatRoom(true);
     });
   }
 
-  private initChatRoom() {
-    this.customerStatus.next('chat-started');
+  private initChatRoom(isCreateChatRoom?: boolean) {
+    if (isCreateChatRoom) {
+      this.sendNotificationEmail();
+      this.customerStatus.next('chat-started');
+    } else {
+      this.customerStatus.next('minimized');
+    }
     const o = this.db.list('chatRooms/' + this.chatRoomId);
     o.snapshotChanges()
       .subscribe((res) => {
@@ -89,6 +95,11 @@ export class CustomerService {
         });
 
       });
+  }
+
+  private sendNotificationEmail() {
+    this.httpClient.post(environment.formspreeApiUrl, { email: 'a@a.com', message: 'new coa customer has started chating' })
+      .subscribe();
   }
 
   sendMessage(message: string) {

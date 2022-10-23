@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {Subject, throwError} from "rxjs";
@@ -15,7 +14,6 @@ export class AgentService {
   private messages: MessageModel[] = [];
 
   constructor(
-    public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private authService: AuthService,

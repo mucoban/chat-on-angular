@@ -6,6 +6,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {SharedModule} from "../shared/shared.module";
 import {CustomerService} from "../shared/services/customer.service";
+import {HttpClientModule} from "@angular/common/http";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -23,6 +24,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       { path: '', component: CustomerComponent }
     ]),
     ReactiveFormsModule,
+    HttpClientModule,
     PerfectScrollbarModule,
     SharedModule
   ],
