@@ -1,27 +1,52 @@
 # ChatOnAngular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
+Instant chap app developed on angular and firebase
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+#### Demo
 
-## Code scaffolding
+[Customer side - https://mucoban.github.io/chat-on-angular-wrapper](https://mucoban.github.io/chat-on-angular-wrapper)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+[Agent side - https://mucoban.github.io/chat-on-angular/agent](https://mucoban.github.io/chat-on-angular/agent)
 
-## Build
+## Usage
+### Firebase
+Create a firebase realtime database on https://firebase.google.com
+and create a user for customers, and one or more users for agents on [authentication page](https://console.firebase.google.com/u/1/project/chat-on-angular/authentication/users).
+Then create agent, customers properties on that database and fill them with user emails that you just created.
+```
+agents: "agent1@agent1.com,agent2@agent2.com"
+customer: "customer@customer.com"
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Environment.ts
+copy `/src/environments/environment.example.ts` file as `environment.ts`, `environment.prod.ts` 
+<br>and fill `environment.firebase` object with your firebase project credentials. 
 
-## Running unit tests
+Fill `environment.customer` value with the email and the password of the account that you created for your customers in your firebase project.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+If you want to get an email when a customer starts a chat, fill `environment.formspreeApiUrl` value with your endpoint that you will get from https://formspree.io
+```html
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
+  },
+  customer: { email: '', password: '' },
+  formspreeApiUrl: '',
+};
+```
 
-## Running end-to-end tests
+### Deployment
+Build your angular project with command `ng build` and upload contents of your `/dist` folder to where you want to serve your chat app.
+Use `/agent` route to access agent panel.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To put chat app on a page or website, you will need to add [coa-wrapper.js](https://github.com/mucoban/chat-on-angular-wrapper/blob/master/coa-wrapper.js)
+as `<script src="https://github.com/mucoban/chat-on-angular-wrapper/blob/master/coa-wrapper.js"></script>` to that page and edit `coa-wrapper.js` to change iframe's src to your url, as mentioned on
+https://github.com/mucoban/chat-on-angular-wrapper
