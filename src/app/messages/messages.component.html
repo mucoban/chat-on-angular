@@ -12,10 +12,12 @@
   <div class="input-box">
     <form [formGroup]="inputForm" (submit)="sendMessage()">
       <div class="col">
-        <input type="text" placeholder="message" formControlName="message">
+        <input type="text" placeholder="type your message" formControlName="message">
       </div>
       <div class="col">
-        <button class="btn">Send</button>
+        <button class="btn circle">
+          <img src="./assets/images/send.svg" />
+        </button>
       </div>
     </form>
   </div>
