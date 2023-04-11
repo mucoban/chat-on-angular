@@ -2,11 +2,20 @@ import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild
 import {MessageModel} from "../shared/models/message.model";
 import {FormControl, FormGroup} from "@angular/forms";
 import {PerfectScrollbarComponent, PerfectScrollbarDirective} from "ngx-perfect-scrollbar";
+import {animate, keyframes, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.scss']
+  styleUrls: ['./messages.component.scss'],
+  animations: [
+    trigger("messagesAni", [
+      transition('void => *', animate(300, keyframes([
+        style({ transform: 'translateY(-50px)', offset: 0 }),
+        style({ transform: 'translateX(0px)', offset: 1 })
+      ])))
+    ])
+  ]
 })
 export class MessagesComponent implements OnInit {
 

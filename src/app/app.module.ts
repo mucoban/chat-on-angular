@@ -8,7 +8,7 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {RouterModule, Routes} from '@angular/router';
-import { MessagesComponent } from './messages/messages.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -31,7 +31,8 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {
@@ -40,7 +41,7 @@ const routes: Routes = [
     }
   ],
   exports: [
-    
+
   ],
   bootstrap: [AppComponent]
 })

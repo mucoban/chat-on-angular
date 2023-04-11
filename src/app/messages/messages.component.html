@@ -1,4 +1,4 @@
-<div class="wrapper" [ngClass]="{ 'sender-agent': isAgent }">
+<div class="wrapper" [ngClass]="{ 'sender-agent': isAgent }" [@messagesAni]>
   <div class="action-buttons">
     <button class="btn" *ngIf="isAgent" (click)="onClickcloseChat()">X</button>
   </div>

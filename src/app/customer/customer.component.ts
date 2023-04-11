@@ -6,6 +6,7 @@ import {MessageModel} from '../shared/models/message.model';
 import {CustomerService} from '../shared/services/customer.service';
 import {AuthService} from "../shared/services/auth.service";
 import {environment} from "../../environments/environment";
+import {animate, keyframes, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-customer',
@@ -57,12 +58,12 @@ export class CustomerComponent implements OnInit, OnDestroy {
           { prop: 'width', value: '100%' },
           { prop: 'height', value: '100%' },
         ], "*");
-      else parent.postMessage([{ prop: 'width', value: '304px' }, { prop: 'height', value: '565px' }], "*");
+      else parent.postMessage([{ prop: 'width', value: '324px' }, { prop: 'height', value: '575px' }], "*");
     }
     else {
       parent.postMessage([
         { prop: 'width', value: '100px' },
-        { prop: 'height', value: '90px' },
+        { prop: 'height', value: '100px' },
       ], "*");
     }
     this.customerStatus = status;
