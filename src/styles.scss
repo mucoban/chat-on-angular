@@ -5,6 +5,10 @@
 
 * {  font-family: Open Sans; box-sizing: border-box; }
 
+.text-left { text-align: left }
+.text-center { text-align: center }
+.text-right { text-align: right }
+
 body {
   width: 100%;
   position: absolute;
@@ -19,7 +23,7 @@ body {
     &.big { font-size: 24px; width: 100%; }
     &.positive { background-color: darkgreen; color: white; font-weight: 100; }
     &.positive2 { background-color: #217fca; color: white; font-weight: 100; padding: 5px 30px; }
-    &.circle { border-radius: 100%; width: 30px; height: 30px; }
+    &.circle { border-radius: 100%; width: 30px; height: 30px; &.remove { padding: 0 } }
 }
 
 .action-buttons {

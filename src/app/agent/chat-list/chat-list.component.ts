@@ -82,4 +82,8 @@ export class ChatListComponent implements OnInit, OnDestroy {
     return chats;
   }
 
+  deleteChat(id: string) {
+    if (confirm('chat will be deleted?')) this.agentService.deleteChat(id)
+  }
+
 }

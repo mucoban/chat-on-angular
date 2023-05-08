@@ -20,6 +20,9 @@
   <h4>Closed Chats</h4>
   <div class="chats old">
     <div class="chat" *ngFor="let chat of closedChats">
+      <div class="text-center">
+        <button class="btn circle remove" (click)="deleteChat(chat.key)"><img src="./assets/images/trash.svg" /></button>
+      </div>
       <div><b>Client Name:</b> {{ chat.date }}</div>
       <div><b>Message:</b> {{ chat.firstMessage }}</div>
     </div>

@@ -39,6 +39,10 @@ export class AgentService {
     return this.db.list('chatRooms').update(id, { status: 'closed' });
   }
 
+  deleteChat(id: string) {
+    return this.db.list('chatRooms').remove(id);
+  }
+
   enterChat(chatId: string) {
     this.messages = [];
     const o = this.db.list('chatRooms/' + chatId);
