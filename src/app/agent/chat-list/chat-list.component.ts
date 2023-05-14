@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AgentService} from "../../shared/services/agent.service";
-import {catchError, first, takeUntil} from "rxjs/operators";
+import {first, takeUntil} from "rxjs/operators";
 import {AuthService} from "../../shared/services/auth.service";
 import {Router} from "@angular/router";
-import {Subject, throwError} from "rxjs";
+import {Subject} from "rxjs";
 
 interface ChatList {
   key: string,
   date: string,
-  firstMessage?: string,
+  cardMessage?: string,
 }
 
 @Component({
@@ -72,10 +72,10 @@ export class ChatListComponent implements OnInit, OnDestroy {
       const chat = i.payload.val() as any;
       chat.key = i.key;
       chat.date = new Date(chat.date).toLocaleString();
-      chat.firstMessage = '';
+      chat.cardMessage = '';
       if (chat.messages) {
         chat.messagesArray = Object.values(chat.messages);
-        chat.firstMessage = chat.messagesArray[0] ? chat.messagesArray[0].message : '';
+        chat.cardMessage = chat.messagesArray.length ? chat.messagesArray.pop().message : '';
       }
       return chat;
     });

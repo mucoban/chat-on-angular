@@ -1,32 +1,41 @@
 <div class="container">
-  <h4>New Chats</h4>
+  <h4>New Chats({{ newChats.length }})</h4>
   <div class="chats">
-    <div class="chat" *ngFor="let chat of newChats" (click)="takeChat(chat.key)">
-      <div><b>Client Name:</b> {{ chat.date }}</div>
-      <div><b>Message:</b> {{ chat.firstMessage }}</div>
-    </div>
     <p *ngIf="!newChats.length">No new chats</p>
+    <ng-container *ngFor="let chat of newChats"
+                  [ngTemplateOutlet]="chatCard"
+                  [ngTemplateOutletContext]="{ chat: chat, options: { joinButton: true } }"></ng-container>
   </div>
 
-  <h4>Active Chats</h4>
+  <h4>Active Chats({{ activeChats.length }})</h4>
   <div class="chats active">
-    <a class="chat" *ngFor="let chat of activeChats" [routerLink]="'/agent/chats/' + chat.key">
-      <div><b>Client Name:</b> {{ chat.date }}</div>
-      <div><b>Message:</b> {{ chat.firstMessage }}</div>
-    </a>
     <p *ngIf="!activeChats.length">No active chats</p>
+    <ng-container *ngFor="let chat of activeChats"
+                  [ngTemplateOutlet]="chatCard"
+                  [ngTemplateOutletContext]="{ chat: chat, options: { joinButtonVerB: true } }"></ng-container>
   </div>
 
-  <h4>Closed Chats</h4>
+  <h4>Closed Chats({{ closedChats.length }})</h4>
   <div class="chats old">
-    <div class="chat" *ngFor="let chat of closedChats">
-      <div class="text-center">
+    <p *ngIf="!closedChats.length">No closed chats</p>
+    <ng-container *ngFor="let chat of closedChats"
+                  [ngTemplateOutlet]="chatCard"
+                  [ngTemplateOutletContext]="{ chat: chat, options: { deleteButton: true, joinButtonVerB: true } }"></ng-container>
+  </div>
+
+  <ng-template #chatCard let-chat="chat" let-options="options">
+    <div class="chat">
+      <div class="text-center" *ngIf="options.deleteButton">
         <button class="btn circle remove" (click)="deleteChat(chat.key)"><img src="./assets/images/trash.svg" /></button>
       </div>
-      <div><b>Client Name:</b> {{ chat.date }}</div>
-      <div><b>Message:</b> {{ chat.firstMessage }}</div>
+      <div><b>Chat Id:</b> {{ chat.key }}</div>
+      <div><b>Started at:</b> {{ chat.date }}</div>
+      <div><b>Last Message:</b> {{ chat.cardMessage }}</div>
+      <div>
+        <button class="btn" *ngIf="options.joinButton" (click)="takeChat(chat.key)">Join</button>
+        <a class="btn" *ngIf="options.joinButtonVerB" [routerLink]="'/agent/chats/' + chat.key">Join</a>
+      </div>
     </div>
-    <p *ngIf="!closedChats.length">No closed chats</p>
-  </div>
+  </ng-template>
 </div>
 
