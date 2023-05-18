@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../shared/services/auth.service";
 import {Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -11,9 +11,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class LoginComponent implements OnInit {
 
   error: string;
-  form =  new FormGroup({
-    username: new FormControl(null, [ Validators.required ]),
-    password: new FormControl(null, [ Validators.required ]),
+  form =  new UntypedFormGroup({
+    username: new UntypedFormControl(null, [ Validators.required ]),
+    password: new UntypedFormControl(null, [ Validators.required ]),
   });
 
   constructor(

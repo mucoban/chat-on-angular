@@ -1,5 +1,5 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
 import {MessageModel} from '../shared/models/message.model';
@@ -21,8 +21,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
   messages: MessageModel[] = [];
   newMessages: number = 0;
 
-  inputForm = new FormGroup({
-    "message": new FormControl()
+  inputForm = new UntypedFormGroup({
+    "message": new UntypedFormControl()
   });
 
   constructor(

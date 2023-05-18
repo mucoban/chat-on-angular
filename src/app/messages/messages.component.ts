@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MessageModel} from "../shared/models/message.model";
-import {FormControl, FormGroup} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup} from "@angular/forms";
 import {PerfectScrollbarComponent, PerfectScrollbarDirective} from "ngx-perfect-scrollbar";
 import {animate, keyframes, style, transition, trigger} from "@angular/animations";
 
@@ -19,8 +19,8 @@ import {animate, keyframes, style, transition, trigger} from "@angular/animation
 })
 export class MessagesComponent implements OnInit {
 
-  inputForm = new FormGroup({
-    "message": new FormControl()
+  inputForm = new UntypedFormGroup({
+    "message": new UntypedFormControl()
   });
 
   @Input() isAgent: boolean;
