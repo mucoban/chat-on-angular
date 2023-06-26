@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {Subject} from 'rxjs';
-import {AngularFireDatabase} from '@angular/fire/database';
-import {first} from 'rxjs/operators';
-import {MessageModel} from '../models/message.model';
+import {Injectable} from "@angular/core";
+import {Subject} from "rxjs";
+import {MessageModel} from "../models/message.model";
+import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {first} from "rxjs/operators";
 
 
 @Injectable()

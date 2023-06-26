@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AgentService} from "../../shared/services/agent.service";
-import {first, takeUntil} from "rxjs/operators";
 import {AuthService} from "../../shared/services/auth.service";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
+import {first, takeUntil} from "rxjs/operators";
 
 interface ChatList {
   key: string,

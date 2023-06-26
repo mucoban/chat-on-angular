@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
-import {AuthService} from "../shared/services/auth.service";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
+import {AuthService} from "../shared/services/auth.service";
 import {takeUntil} from "rxjs/operators";
 
 @Component({

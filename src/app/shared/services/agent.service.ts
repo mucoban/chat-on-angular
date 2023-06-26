@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {AngularFireDatabase} from '@angular/fire/database';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
+import {AngularFireDatabase} from '@angular/fire/compat/database';
 import {Subject, throwError} from "rxjs";
 import {MessageModel} from "../models/message.model";
 import {catchError} from "rxjs/operators";
