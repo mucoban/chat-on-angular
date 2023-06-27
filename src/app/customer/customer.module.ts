@@ -7,12 +7,6 @@ import {SharedModule} from "../shared/shared.module";
 import {CustomerService} from "../shared/services/customer.service";
 import {HttpClientModule} from "@angular/common/http";
 
-// const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-//     suppressScrollX: true,
-//     wheelSpeed: 1,
-//     swipeEasing: false
-//   };
-
 @NgModule({
   declarations: [
     CustomerComponent,
@@ -24,15 +18,8 @@ import {HttpClientModule} from "@angular/common/http";
     ]),
     ReactiveFormsModule,
     HttpClientModule,
-    // PerfectScrollbarModule,
     SharedModule
   ],
-  providers: [
-    CustomerService,
-    // {
-    //   provide: PERFECT_SCROLLBAR_CONFIG,
-    //   useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    // }
-  ],
+  providers: [CustomerService],
 })
 export class CustomerModule { }

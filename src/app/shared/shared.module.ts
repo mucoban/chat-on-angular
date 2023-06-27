@@ -2,12 +2,7 @@ import {NgModule} from "@angular/core";
 import {MessagesComponent} from "../messages/messages.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-
-// const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-//   suppressScrollX: true,
-//   wheelSpeed: 1,
-//   swipeEasing: false
-// };
+import {NgScrollbarModule} from "ngx-scrollbar";
 
 @NgModule({
   declarations: [
@@ -16,16 +11,11 @@ import {CommonModule} from "@angular/common";
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    // PerfectScrollbarModule,
+    NgScrollbarModule
   ],
   exports: [
     MessagesComponent,
   ],
-  providers: [
-    // {
-    //   provide: PERFECT_SCROLLBAR_CONFIG,
-    //   useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    // }
-  ]
+  providers: []
 })
 export class SharedModule {}

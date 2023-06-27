@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MessageModel} from "../shared/models/message.model";
 import {UntypedFormControl, UntypedFormGroup} from "@angular/forms";
-import {PerfectScrollbarComponent, PerfectScrollbarDirective} from "ngx-perfect-scrollbar";
 import {animate, keyframes, style, transition, trigger} from "@angular/animations";
+import {NgScrollbar} from "ngx-scrollbar";
 
 @Component({
   selector: 'app-messages',
@@ -30,8 +30,7 @@ export class MessagesComponent implements OnInit {
   @Output() messageSent: EventEmitter<string> = new EventEmitter<string>();
   @Output() closeChat: EventEmitter<void> = new EventEmitter<void>();
 
-  @ViewChild(PerfectScrollbarComponent) perfectScrollbarComponent?: PerfectScrollbarComponent;
-  @ViewChild(PerfectScrollbarDirective) perfectScrollbarDirective?: PerfectScrollbarDirective;
+  @ViewChild('scrollbarRef') scrollbarRef: NgScrollbar;
 
   constructor() { }
 
@@ -40,7 +39,7 @@ export class MessagesComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.newMessages && changes.newMessages.currentValue > 0) {
-      setTimeout(() => { this.scrollToBottom(); }, 100);
+      setTimeout(() => { this.scrollbarRef.scrollTo({ bottom: 0 }) }, 100);
     }
   }
 
@@ -50,9 +49,5 @@ export class MessagesComponent implements OnInit {
   }
 
   onClickcloseChat() { this.closeChat.emit(); }
-
-  private scrollToBottom() {
-    (this.perfectScrollbarComponent as any)?.directiveRef.scrollToBottom();
-  }
 
 }

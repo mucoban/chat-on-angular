@@ -7,12 +7,7 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../environments/environment";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
-
-// const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-//   suppressScrollX: true,
-//   wheelSpeed: 1,
-//   swipeEasing: false
-// };
+import {NgScrollbarModule} from "ngx-scrollbar";
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule) },
@@ -29,15 +24,10 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    // PerfectScrollbarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgScrollbarModule
   ],
-  providers: [
-    // {
-    //   provide: PERFECT_SCROLLBAR_CONFIG,
-    //   useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    // }
-  ],
+  providers: [],
   exports: [
 
   ],

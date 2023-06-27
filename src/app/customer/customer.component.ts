@@ -6,7 +6,6 @@ import {MessageModel} from '../shared/models/message.model';
 import {CustomerService} from '../shared/services/customer.service';
 import {AuthService} from "../shared/services/auth.service";
 import {environment} from "../../environments/environment";
-import {animate, keyframes, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-customer',
