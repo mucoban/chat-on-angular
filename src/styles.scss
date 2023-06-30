@@ -8,6 +8,8 @@
 .text-left { text-align: left }
 .text-center { text-align: center }
 .text-right { text-align: right }
+.no-wrap { white-space: nowrap }
+.font-weight-400 { font-weight: 400 }
 
 body {
   width: 100%;
@@ -17,13 +19,29 @@ body {
 }
 
 .btn {
-    padding: 5px 10px; border: 1px solid #999; background: #fff; cursor: pointer;
-    border-radius: 5px; transition: all .3s; font-size: 14px; text-decoration: none;
+    font-size: 13px; text-decoration: none;
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    color: #24292E;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+
     &:hover { background-color: #eee; }
     &.big { font-size: 24px; width: 100%; }
     &.positive { background-color: darkgreen; color: white; font-weight: 100; }
     &.positive2 { background-color: #217fca; color: white; font-weight: 100; padding: 5px 30px; }
     &.circle { border-radius: 100%; width: 30px; height: 30px; &.remove { padding: 0 } }
+    &.logout {
+      img {
+        width: 17px;
+        vertical-align: top;
+        margin: 2px 5px 0 0; }
+    }
 }
 
 .action-buttons {

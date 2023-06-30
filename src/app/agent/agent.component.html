@@ -5,7 +5,9 @@
   </div>
   <a class="btn" routerLink="/agent/chats">Chats</a>
   <div class="logout-holder">
-    <button class="btn logout" (click)="onLogout()">&#8683; Log out</button>
+    <button class="btn logout no-wrap" (click)="onLogout()">
+      <img src="./assets/images/logout.svg" alt="logout">
+      Log out</button>
   </div>
 </div>
 <router-outlet></router-outlet>
