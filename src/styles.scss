@@ -19,6 +19,7 @@ body {
 }
 
 .btn {
+    display: inline-block;
     font-size: 13px; text-decoration: none;
     background-color: #FAFBFC;
     border: 1px solid rgba(27, 31, 35, 0.15);
@@ -30,17 +31,23 @@ body {
     list-style: none;
     padding: 6px 16px;
     transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    cursor: pointer;
 
     &:hover { background-color: #eee; }
     &.big { font-size: 24px; width: 100%; }
     &.positive { background-color: darkgreen; color: white; font-weight: 100; }
     &.positive2 { background-color: #217fca; color: white; font-weight: 100; padding: 5px 30px; }
-    &.circle { border-radius: 100%; width: 30px; height: 30px; &.remove { padding: 0 } }
-    &.logout {
+    &.circle { border-radius: 100%; width: 30px; height: 30px;
+      &.remove { padding: 0; }
+    }
+    &.image {
       img {
         width: 17px;
         vertical-align: top;
         margin: 2px 5px 0 0; }
+      &.i-right {
+        img { margin: 2px 0px 0 5px; }
+      }
     }
 }
 

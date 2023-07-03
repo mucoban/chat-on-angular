@@ -75,6 +75,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
       chat.cardMessage = '';
       if (chat.messages) {
         chat.messagesArray = Object.values(chat.messages);
+        chat.messageCount = chat.messagesArray.length;
         chat.cardMessage = chat.messagesArray.length ? chat.messagesArray.pop().message : '';
       }
       return chat;
