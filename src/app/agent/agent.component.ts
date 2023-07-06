@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {Subject} from "rxjs";
 import {AuthService} from "../shared/services/auth.service";
 import {takeUntil} from "rxjs/operators";
@@ -11,8 +11,9 @@ import {takeUntil} from "rxjs/operators";
 })
 export class AgentComponent implements OnInit, OnDestroy {
 
-  isAgentLoggedIn: boolean;
-  private destroy$ = new Subject<boolean>();
+  isAgentLoggedIn: boolean
+  isChatDetail: boolean
+  private destroy$ = new Subject<boolean>()
 
   constructor(
     private router: Router,
@@ -31,12 +32,18 @@ export class AgentComponent implements OnInit, OnDestroy {
       .subscribe({ next: value => {
         this.isAgentLoggedIn = value;
       } });
+
+    const setIsChatDetail = (url: string) => { this.isChatDetail = !url.match(/\/agent\/chats$/) }
+    setIsChatDetail(window.location.href)
+    this.router.events.subscribe(event => { if (event instanceof NavigationEnd) { setIsChatDetail(event.url) } })
   }
 
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
+
+  endTheChat() { confirm('are you sure?') }
 
   onLogout() { this.authService.signOut(); }
 

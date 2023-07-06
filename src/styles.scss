@@ -10,6 +10,7 @@
 .text-right { text-align: right }
 .no-wrap { white-space: nowrap }
 .font-weight-400 { font-weight: 400 }
+.m-r-10 { margin-right: 10px }
 
 body {
   width: 100%;
@@ -37,6 +38,8 @@ body {
     &.big { font-size: 24px; width: 100%; }
     &.positive { background-color: darkgreen; color: white; font-weight: 100; }
     &.positive2 { background-color: #217fca; color: white; font-weight: 100; padding: 5px 30px; }
+    &.warning { background-color: #fdb430;  }
+
     &.circle { border-radius: 100%; width: 30px; height: 30px;
       &.remove { padding: 0; }
     }
