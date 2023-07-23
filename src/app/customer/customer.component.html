@@ -3,9 +3,7 @@
                 (messageSent)="insertMessage($event)"></app-messages>
 </ng-container>
 
-<button class="switch-btn" [ngClass]="{ 'close-on': customerStatus === 'chat-started' }"
-        (click)="customerStatus === 'chat-started' ? setCustomerStatus('minimized') :
-        customerStatus === 'waiting' ? createChatRoom() : setCustomerStatus('chat-started')">
+<button class="switch-btn" [ngClass]="{ 'close-on': customerStatus === 'chat-started' }" (click)="onClickSwitchButton()">
   <img src="assets/images/mail.svg" alt="mail">
   <span class="close-icon">
     <span></span>

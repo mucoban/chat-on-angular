@@ -6,6 +6,8 @@ import {MessageModel} from '../shared/models/message.model';
 import {CustomerService} from '../shared/services/customer.service';
 import {AuthService} from "../shared/services/auth.service";
 import {environment} from "../../environments/environment";
+import {Store} from "@ngrx/store";
+import {setCustomerState} from "../store/actions";
 
 @Component({
   selector: 'app-customer',
@@ -16,7 +18,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<boolean>();
   private isParentMobile: boolean;
-  customerStatus: string = 'waiting';
+  customerStatus: string;
   messages: MessageModel[] = [];
   newMessages: number = 0;
 
@@ -27,6 +29,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private customerService: CustomerService,
+    private store: Store<{ messages: MessageModel[], customerState: string }>,
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +46,6 @@ export class CustomerComponent implements OnInit, OnDestroy {
   @HostListener('window:message', ['$event'])
   onMessage(event: any) {
     if (event.data.innerWidth) this.isParentMobile = event.data.innerWidth < 992;
-    this.setCustomerStatus(this.customerStatus);
   }
 
   ngOnDestroy(): void {
@@ -51,7 +53,20 @@ export class CustomerComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  setCustomerStatus(status: string) {
+  onClickSwitchButton() {
+    switch (this.customerStatus) {
+      case 'chat-started':
+        this.store.dispatch(setCustomerState('minimized'))
+        break
+      case 'waiting':
+        this.createChatRoom()
+        break
+      default:
+        this.store.dispatch(setCustomerState('chat-started'))
+    }
+  }
+
+  handleCustomerStatus(status: string) {
     if (status === 'chat-started') {
       if (this.isParentMobile) parent.postMessage([
           { prop: 'width', value: '100%' },
@@ -69,14 +84,15 @@ export class CustomerComponent implements OnInit, OnDestroy {
   }
 
   private continueToInit() {
-    this.customerService.customerStatus
+   this.store.select('customerState')
       .pipe(takeUntil(this.destroy$))
-      .subscribe(res => { this.setCustomerStatus(res); });
+      .subscribe((res: any) => {
+        this.handleCustomerStatus(res); });
 
-    this.customerService.newMessage
+    this.store.select('messages')
       .pipe(takeUntil(this.destroy$))
-      .subscribe(res => {
-        this.messages.push(res);
+      .subscribe(res=> {
+        this.messages = res
         this.newMessages++;
       });
 

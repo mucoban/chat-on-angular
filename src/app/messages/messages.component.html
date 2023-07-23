@@ -1,7 +1,5 @@
 <div class="wrapper" [ngClass]="{ 'sender-agent': isAgent }" [@messagesAni]>
-  <div class="action-buttons">
-    <button class="btn" *ngIf="isAgent" (click)="onClickcloseChat()">End the Chat</button>
-  </div>
+  <div class="action-buttons"></div>
   <div class="messages-box">
     <ng-scrollbar #scrollbarRef style="width: 100%;" [autoHeightDisabled]="false">
         <div class="message" *ngFor="let message of messages" [ngClass]="{ 'agent': message.sender === 'agent' }">

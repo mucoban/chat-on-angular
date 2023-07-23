@@ -6,6 +6,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from "../shared/shared.module";
 import {CustomerService} from "../shared/services/customer.service";
 import {HttpClientModule} from "@angular/common/http";
+import {StoreModule} from "@ngrx/store";
+import {CustomerStateReducer, MessagesReducer} from "../store/reducer";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import {HttpClientModule} from "@angular/common/http";
     ]),
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot({ messages: MessagesReducer, customerState: CustomerStateReducer })
   ],
   providers: [CustomerService],
 })

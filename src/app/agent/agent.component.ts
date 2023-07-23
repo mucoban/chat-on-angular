@@ -3,6 +3,8 @@ import {NavigationEnd, Router} from "@angular/router";
 import {Subject} from "rxjs";
 import {AuthService} from "../shared/services/auth.service";
 import {takeUntil} from "rxjs/operators";
+import {Store} from "@ngrx/store";
+import {callAction} from "../store/actions";
 
 @Component({
   selector: 'app-agent',
@@ -19,6 +21,7 @@ export class AgentComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private renderer2: Renderer2,
+    private store: Store<{agent: string}>,
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +46,9 @@ export class AgentComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  endTheChat() { confirm('are you sure?') }
+  endTheChat() {
+    this.store.dispatch(callAction('endTheChat'))
+  }
 
   onLogout() { this.authService.signOut(); }
 
