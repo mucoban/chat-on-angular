@@ -9,6 +9,8 @@ import {ChatListComponent} from "./chat-list/chat-list.component";
 import {ChatDetailComponent} from "./chat-detail/chat-detail.component";
 import {AgentService} from "../shared/services/agent.service";
 import {SharedModule} from "../shared/shared.module";
+import {StoreModule} from "@ngrx/store";
+import {AgentReducer, MessagesReducer} from "../store/reducer";
 
 
 @NgModule({
@@ -30,6 +32,7 @@ import {SharedModule} from "../shared/shared.module";
         ] },
     ]),
     SharedModule,
+    StoreModule.forRoot({ messages: MessagesReducer, agent: AgentReducer })
   ],
   providers: [ AgentService, AgentAuthGuard ]
 })

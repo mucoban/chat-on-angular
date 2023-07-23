@@ -48,6 +48,4 @@ export class MessagesComponent implements OnInit {
     this.inputForm.reset();
   }
 
-  onClickcloseChat() { this.closeChat.emit(); }
-
 }

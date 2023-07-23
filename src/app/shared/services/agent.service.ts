@@ -1,22 +1,24 @@
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {AngularFireDatabase} from '@angular/fire/compat/database';
-import {Subject, throwError} from "rxjs";
+import {throwError} from "rxjs";
 import {MessageModel} from "../models/message.model";
 import {catchError} from "rxjs/operators";
 import {AuthService} from "./auth.service";
+import {Store} from "@ngrx/store";
+import {newMessage} from "../../store/actions";
 
 
 @Injectable()
 export class AgentService {
 
-  newMessage = new Subject<{time: number, sender: string, message: string}>();
   private messages: MessageModel[] = [];
 
   constructor(
     public afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private authService: AuthService,
+    private store: Store<{ newMessages: MessageModel[] }>,
   ) { }
 
 
@@ -34,8 +36,7 @@ export class AgentService {
     return this.db.list('chatRooms').update(id, { isAgent: true, agentUid: uid});
   }
 
-
-  closeChat(id: string) {
+  endTheChat(id: string) {
     return this.db.list('chatRooms').update(id, { status: 'closed' });
   }
 
@@ -69,7 +70,7 @@ export class AgentService {
               message: messageItem.message
             };
             this.messages.push(newMessageItem);
-            this.newMessage.next(newMessageItem);
+            this.store.dispatch(newMessage(newMessageItem))
           }
           return messageItem;
         });

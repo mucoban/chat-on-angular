@@ -1,25 +1,23 @@
 import {Injectable} from "@angular/core";
-import {Subject} from "rxjs";
 import {MessageModel} from "../models/message.model";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {first} from "rxjs/operators";
+import {Store} from "@ngrx/store";
+import {newMessage, setCustomerState} from "../../store/actions";
 
 
 @Injectable()
 export class CustomerService {
-  customerStatus = new Subject<string>();
-  newMessage = new Subject<{time: number, sender: string, message: string}>();
   private messages: MessageModel[] = [];
   private clientId: string = '';
   private chatRoomId: string = '';
 
   constructor(
-    public afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private httpClient: HttpClient,
+    private store: Store<{ messages: MessageModel[], customerState: string }>,
   ) { }
 
   initCustomer() {
@@ -61,9 +59,9 @@ export class CustomerService {
   private initChatRoom(isCreateChatRoom?: boolean) {
     if (isCreateChatRoom) {
       this.sendNotificationEmail();
-      this.customerStatus.next('chat-started');
+      this.store.dispatch(setCustomerState('chat-started'))
     } else {
-      this.customerStatus.next('minimized');
+      this.store.dispatch(setCustomerState('chat-started'))
     }
     const o = this.db.list('chatRooms/' + this.chatRoomId);
     o.snapshotChanges()
@@ -89,7 +87,7 @@ export class CustomerService {
                message: messageItem.message
               };
             this.messages.push(newMessageItem);
-            this.newMessage.next(newMessageItem);
+            this.store.dispatch(newMessage(newMessageItem))
            }
           return messageItem;
         });
@@ -111,7 +109,7 @@ export class CustomerService {
 
   endChat() {
     this.db.list('chatRooms').update(this.chatRoomId, { status: 'closed' });
-    this.customerStatus.next('waiting');
+    this.store.dispatch(setCustomerState('waiting'))
     this.chatRoomId = '';
     this.messages = [];
   }
