@@ -63,13 +63,17 @@ export class CustomerService {
     } else {
       this.store.dispatch(setCustomerState('chat-started'))
     }
+    let customerMessagesCount: number = 0
+
     const o = this.db.list('chatRooms/' + this.chatRoomId);
     o.snapshotChanges()
       .subscribe((res) => {
-
         const status = res.find(i => i.key === 'status');
         const messages = res.find(i => i.key === 'messages');
-        if (status?.payload.val() !== 'open' || !messages) return;
+        if (status?.payload.val() !== 'open' || !messages) {
+          this.sendMessage('Welcome, you are now chatting with an agent of ours', true)
+          return
+        }
 
         const messagesPayload = Object.values((messages as any).payload.val())
           .sort((a: any, b: any) => a.time - b.time);
@@ -78,13 +82,15 @@ export class CustomerService {
           const messageItem: any = item;
           const found = this.messages.find((tm: any) => tm.time === messageItem.time);
           if (!found) {
+            if (messageItem.sender === 'client') customerMessagesCount++
             const newDate = new Date(messageItem.time);
             const dateText = newDate.toTimeString().substr(0, 5);
             const newMessageItem = {
-              time: messageItem.time,
-              dateText: dateText,
-               sender: messageItem.sender,
-               message: messageItem.message
+                time: messageItem.time,
+                dateText: dateText,
+                sender: messageItem.sender,
+                isInfo: messageItem.isInfo,
+                message: messageItem.message
               };
             this.messages.push(newMessageItem);
             this.store.dispatch(newMessage(newMessageItem))
@@ -101,8 +107,9 @@ export class CustomerService {
       .subscribe();
   }
 
-  sendMessage(message: string) {
+  sendMessage(message: string, isInfo?: boolean) {
     const newMessageItem: MessageModel  = { time: new Date().getTime(), sender: 'client', message: message };
+    if (isInfo) { newMessageItem.isInfo = true }
     this.db.list('chatRooms/' + this.chatRoomId + '/messages').push(newMessageItem);
   }
 

@@ -17,6 +17,7 @@ export class ChatDetailComponent implements OnInit, OnDestroy {
   private chatId: string;
   messages: MessageModel[] = [];
   newMessages: number = 0;
+  agentMessgesCount: number = 0;
 
   private destroy$ = new Subject<boolean>();
 
@@ -29,7 +30,15 @@ export class ChatDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.chatId = this.activatedRoute.snapshot.params.id;
-    this.agentService.enterChat(this.chatId);
+    this.agentService.enterChat(this.chatId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        if (!this.agentMessgesCount) {
+          setTimeout(() => {
+            this.sendMessage('Welcome agent, you are now chatting with a customer', true)
+          }, 300)
+        }
+      });
 
     this.store.select('messages')
       .pipe(takeUntil(this.destroy$))
@@ -37,6 +46,7 @@ export class ChatDetailComponent implements OnInit, OnDestroy {
         console.log('chatdetail res', res)
         this.messages = res
         this.newMessages++;
+        this.agentMessgesCount = res.filter((message: MessageModel) => message.sender === 'agent').length
       });
 
     this.store.select('agent')
@@ -54,8 +64,8 @@ export class ChatDetailComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  sendMessage(message: string) {
-    this.agentService.sendMessage(this.chatId, message);
+  sendMessage(message: string, isInfo?: boolean) {
+    this.agentService.sendMessage(this.chatId, message, isInfo);
   }
 
   endTheChat() {

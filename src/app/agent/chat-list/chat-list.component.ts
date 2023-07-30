@@ -4,6 +4,7 @@ import {AuthService} from "../../shared/services/auth.service";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
 import {first, takeUntil} from "rxjs/operators";
+import {MessageModel} from "../../shared/models/message.model";
 
 interface ChatList {
   key: string,
@@ -74,7 +75,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
       chat.date = new Date(chat.date).toLocaleString();
       chat.cardMessage = '';
       if (chat.messages) {
-        chat.messagesArray = Object.values(chat.messages);
+        chat.messagesArray = (Object.values(chat.messages) as []).filter((m: MessageModel) => !m.isInfo);
         chat.messageCount = chat.messagesArray.length;
         chat.cardMessage = chat.messagesArray.length ? chat.messagesArray.pop().message : '';
       }

@@ -3,7 +3,7 @@ import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {AngularFireDatabase} from '@angular/fire/compat/database';
 import {throwError} from "rxjs";
 import {MessageModel} from "../models/message.model";
-import {catchError} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 import {AuthService} from "./auth.service";
 import {Store} from "@ngrx/store";
 import {newMessage} from "../../store/actions";
@@ -47,40 +47,43 @@ export class AgentService {
   enterChat(chatId: string) {
     this.messages = [];
     const o = this.db.list('chatRooms/' + chatId);
-    o.snapshotChanges()
-      .pipe(catchError((err) => this.handleError(err)))
-      .subscribe((res) => {
-        const status = res.find(i => i.key === 'status');
-        const messages = res.find(i => i.key === 'messages');
-        if (status?.payload.val() !== 'open' || !messages) return;
+    return o.snapshotChanges()
+      .pipe(
+        catchError((err) => this.handleError(err)),
+        tap(res => {
+          const status = res.find(i => i.key === 'status');
+          const messages = res.find(i => i.key === 'messages');
+          if (status?.payload.val() !== 'open' || !messages) return;
 
-        const messagesPayload = Object.values((messages as any).payload.val())
-          .sort((a: any, b: any) => a.time - b.time);
+          const messagesPayload = Object.values((messages as any).payload.val())
+            .sort((a: any, b: any) => a.time - b.time);
 
-        (messagesPayload).map((item) => {
-          const messageItem: any = item;
-          const found = this.messages.find((tm: any) => tm.time === messageItem.time);
-          if (!found) {
-            const newDate = new Date(messageItem.time);
-            const dateText = newDate.toTimeString().substr(0, 5);
-            const newMessageItem = {
-              time: messageItem.time,
-              dateText: dateText,
-              sender: messageItem.sender,
-              message: messageItem.message
-            };
-            this.messages.push(newMessageItem);
-            this.store.dispatch(newMessage(newMessageItem))
-          }
-          return messageItem;
-        });
-
-      });
+          (messagesPayload).map((item) => {
+            const messageItem: any = item;
+            const found = this.messages.find((tm: any) => tm.time === messageItem.time);
+            if (!found) {
+              const newDate = new Date(messageItem.time);
+              const dateText = newDate.toTimeString().substr(0, 5);
+              const newMessageItem = {
+                time: messageItem.time,
+                dateText: dateText,
+                sender: messageItem.sender,
+                isInfo: messageItem.isInfo,
+                message: messageItem.message
+              };
+              this.messages.push(newMessageItem);
+              this.store.dispatch(newMessage(newMessageItem))
+            }
+            return messageItem;
+          });
+        })
+      )
   }
 
 
-  sendMessage(chatId: string, message: string) {
+  sendMessage(chatId: string, message: string, isInfo?: boolean) {
     const newMessageItem: MessageModel  = { time: new Date().getTime(), sender: 'agent', message: message };
+    if (isInfo) { newMessageItem.isInfo = true }
     this.db.list('chatRooms/' + chatId + '/messages').push(newMessageItem);
   }
 
