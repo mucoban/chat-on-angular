@@ -23,6 +23,14 @@
       background-color: #748ccc;
     }
   }
+  &.info { text-align: center !important;
+    .inner {
+      background: #958989;
+      border: 1px solid #887676;
+      color: #e2e2e2;
+      font-size: 12px;
+    }
+  }
 }
 
 .input-box {

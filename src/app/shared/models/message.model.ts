@@ -3,4 +3,5 @@ export class MessageModel {
     public sender: string;
     public message?: string;
     public dateText?: string;
+    public isInfo?: boolean;
 }
