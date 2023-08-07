@@ -8,6 +8,7 @@ import {AuthService} from "../shared/services/auth.service";
 import {environment} from "../../environments/environment";
 import {Store} from "@ngrx/store";
 import {setCustomerState} from "../store/actions";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-customer',
@@ -30,9 +31,14 @@ export class CustomerComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private customerService: CustomerService,
     private store: Store<{ messages: MessageModel[], customerState: string }>,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    const goToAgentPanel = this.activatedRoute.snapshot.queryParams['go-to-agent-panel']
+    if (goToAgentPanel) this.router.navigate(['agent'])
+
     this.authService.signInCheckRemote({ email: environment.customer.email, password: environment.customer.password });
 
     this.authService.isFbUserSingedIn
