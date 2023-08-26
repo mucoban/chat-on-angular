@@ -5,9 +5,9 @@ Instant chap app developed on angular and firebase
 
 #### Demo
 
-[Customer side - https://mucoban.github.io/chat-on-angular-wrapper](https://mucoban.github.io/chat-on-angular-wrapper)
+[Customer side - https://mucoban.github.io/chat-on-angular](https://mucoban.github.io/chat-on-angular)
 
-[Agent side - https://mucoban.github.io/chat-on-angular/agent](https://mucoban.github.io/chat-on-angular/agent)
+[Agent side - https://mucoban.github.io/chat-on-angular/chat-on-angular/agent](https://mucoban.github.io/chat-on-angular/chat-on-angular?go-to-agent-panel=1)
 
 ## Usage
 ### Firebase
@@ -25,7 +25,7 @@ copy `/src/environments/environment.example.ts` file as `environment.ts`, `envir
 
 Fill `environment.customer` value with the email and the password of the account that you created for your customers in your firebase project.
 
-If you want to get an email when a customer starts a chat, fill `environment.formspreeApiUrl` value with your endpoint that you will get from https://formspree.io
+If you want to get an email when a customer starts a chat, fill `environment.formspreeApiUrl` property with your link that you will get from https://formspree.io
 ```html
 export const environment = {
   production: false,
@@ -47,6 +47,4 @@ export const environment = {
 Build your angular project with command `ng build` and upload contents of your `/dist` folder to where you want to serve your chat app.
 Use `/agent` route to access agent panel.
 
-To put chat app on a page or website, you will need to add [coa-wrapper.js](https://github.com/mucoban/chat-on-angular-wrapper/blob/master/coa-wrapper.js)
-as `<script src="https://github.com/mucoban/chat-on-angular-wrapper/blob/master/coa-wrapper.js"></script>` to that page and edit `coa-wrapper.js` to change iframe's src to your url, as mentioned on
-https://github.com/mucoban/chat-on-angular-wrapper
+To integrate chat app on a page or website, you can have look at `example-page/index.html` file to see the implematation
