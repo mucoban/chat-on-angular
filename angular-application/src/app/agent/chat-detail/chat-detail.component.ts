@@ -43,7 +43,6 @@ export class ChatDetailComponent implements OnInit, OnDestroy {
     this.store.select('messages')
       .pipe(takeUntil(this.destroy$))
       .subscribe((res: any) => {
-        console.log('chatdetail res', res)
         this.messages = res
         this.newMessages++;
         this.agentMessgesCount = res.filter((message: MessageModel) => message.sender === 'agent').length

@@ -48,6 +48,7 @@ export class AgentComponent implements OnInit, OnDestroy {
 
   endTheChat() {
     this.store.dispatch(callAction('endTheChat'))
+    this.store.dispatch(callAction(null))
   }
 
   onLogout() { this.authService.signOut(); }

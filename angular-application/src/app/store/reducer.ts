@@ -1,7 +1,6 @@
 import {createReducer, on} from "@ngrx/store";
 import {emtpyMessages, callAction, newMessage, setCustomerState} from "./actions";
 import {MessageModel} from "../shared/models/message.model";
-import {state} from "@angular/animations";
 
 const initialStateNewMessages: MessageModel[] = []
 
