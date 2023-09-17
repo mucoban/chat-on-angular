@@ -11,8 +11,8 @@ import {NgScrollbar} from "ngx-scrollbar";
   animations: [
     trigger("messagesAni", [
       transition('void => *', animate(300, keyframes([
-        style({ transform: 'translateY(-50px)', offset: 0 }),
-        style({ transform: 'translateX(0px)', offset: 1 })
+        style({ transform: 'scale(.7) translateY(0px)', transformOrigin: '100% 100%', opacity: 0, offset: 0 }),
+        style({ transform: 'scale(1) translateX(0px)', opacity: 1, offset: 1 })
       ])))
     ])
   ]

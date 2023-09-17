@@ -1,9 +1,10 @@
 .wrapper {
   background-color: #fff;
   padding: 0px;
-  border: 2px solid #78acd2;
+  border: 1px solid #999;
   border-radius: 10px;
   overflow: hidden;
+  background: url("../../assets/images/chat-box-bg.jpg") center / cover;
 }
 .messages-box {
   padding: 10px; margin-bottom: 5px; padding-right: 0px;
@@ -24,9 +25,9 @@
     }
   }
   &.info { text-align: center !important;
+    display: flex; height: 200px; align-items: center;
     .inner {
-      background: #958989;
-      border: 1px solid #887676;
+      background: #607D8B;
       color: #e2e2e2;
       font-size: 12px;
     }
@@ -34,7 +35,7 @@
 }
 
 .input-box {
-  margin: 5px; padding: 7px; border-radius: 10px; background-color: #78acd2;
+  margin: 5px; padding: 7px; border-radius: 10px; background-color: #1174c4;
   form {  display: flex; }
   .col {
     display: flex;
