@@ -5,6 +5,13 @@
   border-radius: 10px;
   overflow: hidden;
   background: url("../../assets/images/chat-box-bg.jpg") center / cover;
+
+  &.sender-agent {
+    background: none;
+    .messages-box {
+      height: calc(100vh - 115px);
+    }
+  }
 }
 .messages-box {
   padding: 10px; margin-bottom: 5px; padding-right: 0px;
@@ -25,7 +32,7 @@
     }
   }
   &.info { text-align: center !important;
-    display: flex; height: 200px; align-items: center;
+    display: flex; height: 200px; align-items: center; justify-content: center;
     .inner {
       background: #607D8B;
       color: #e2e2e2;
