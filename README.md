@@ -2,6 +2,32 @@
 
 Instant chap app developed on angular and firebase
 
+### ✨ Built With
+
+ <table>
+   <tbody>
+      <tr>
+        <td align="Center" width="30%"> 
+         <a href="https://reactjs.org/" target="_blank" rel="noreferrer">
+            <img src="./example-page/images/angular-logo.svg" width="36" height="36" alt="Angular" />
+         </a>
+            <br>Angular
+        </td>
+        <td align="Center" width="30%"> 
+         <a href="https://reactjs.org/" target="_blank" rel="noreferrer">
+            <img src="./example-page/images/firebase-logo.svg" width="36" height="36" alt="Firebase" />
+         </a>
+            <br>Firebase
+        </td> 
+      </tr>
+  </tbody>
+</table>
+
+
+### 🖼️ Screenshots
+
+![image](example-page/images/ss-1.png)
+![image](example-page/images/ss-2.png)
 
 #### Demo
 
