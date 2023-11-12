@@ -1,39 +1,51 @@
 <div class="container">
     <ng-container [ngTemplateOutlet]="chatCard"
-                  [ngTemplateOutletContext]="{ chats: newChats, type: 'new', headline: 'New Chats', options: { joinButton: true } }" />
+                  [ngTemplateOutletContext]="{ chats: newChats, type: 'new', headline: 'New Chats',
+                   preloader: preloaders.newChats, preloaderBarColor: '#7fd59f', options: { joinButton: true } }" />
 
     <ng-container [ngTemplateOutlet]="chatCard"
-                  [ngTemplateOutletContext]="{ chats: activeChats, type: 'active', headline: 'Active Chats', options: { joinButtonVerB: true } }" />
+                  [ngTemplateOutletContext]="{ chats: activeChats, type: 'active', headline: 'Active Chats',
+                   preloader: preloaders.activeChats, preloaderBarColor: '#b7abab', options: { joinButtonVerB: true } }" />
 
     <ng-container [ngTemplateOutlet]="chatCard"
-                  [ngTemplateOutletContext]="{ chats: closedChats, type: 'old', headline: 'Closed Chats', options: { deleteButton: true, joinButtonVerB: true } }" />
+                  [ngTemplateOutletContext]="{ chats: closedChats, type: 'old', headline: 'Closed Chats',
+                   preloader: preloaders.closedChats, preloaderBarColor: '#dbae04', options: { deleteButton: true, joinButtonVerB: true } }" />
 
 </div>
-<ng-template #chatCard let-options="options" let-headline="headline" let-chats="chats" let-type="type">
+<ng-template #chatCard
+             let-options="options" let-headline="headline" let-chats="chats"  let-preloader="preloader"
+             let-preloaderBarColor="preloaderBarColor" let-type="type">
   <div class="chat-list-box {{ type }}">
     <h2 class="font-weight-400">{{headline}}({{ chats.length }})</h2>
-    <p *ngIf="!chats.length">No {{type}} chats</p>
-    <div class="chats">
-      <div class="chat" *ngFor="let chat of chats">
-        <div class="text-center" *ngIf="options.deleteButton">
-          <button class="btn circle remove" (click)="deleteChat(chat.key)"><img src="./assets/images/trash.svg" /></button>
-        </div>
-        <div><span class="label">Chat Id:</span> {{ chat.key }}</div>
-        <div><span class="label">Chat Date:</span> {{ chat.date }}</div>
-        <div><span class="label">Message Count:</span> {{ chat.messageCount || 0 }}</div>
-        <div><span class="label">Last Message:</span> {{ chat.cardMessage }}</div>
-        <div class="buttons text-right">
-          <button class="btn image i-right" *ngIf="options.joinButton" (click)="takeChat(chat.key)">
-            Join
-            <img src="./assets/images/right.svg" alt="right">
-          </button>
-          <a class="btn image i-right" *ngIf="options.joinButtonVerB" [routerLink]="'/agent/chats/' + chat.key">
-            Join
-            <img src="./assets/images/right.svg" alt="right">
-          </a>
+
+    <div *ngIf="preloader" class="preloader-wrapper">
+      <app-preloader [barColor]="preloaderBarColor"></app-preloader>
+    </div>
+    <ng-container *ngIf="!preloader">
+      <p *ngIf="!chats.length">No {{type}} chats</p>
+      <div class="chats">
+        <div class="chat" *ngFor="let chat of chats">
+          <div class="text-center" *ngIf="options.deleteButton">
+            <button class="btn circle remove" (click)="deleteChat(chat.key)"><img src="./assets/images/trash.svg" /></button>
+          </div>
+          <div><span class="label">Chat Id:</span> {{ chat.key }}</div>
+          <div><span class="label">Chat Date:</span> {{ chat.date }}</div>
+          <div><span class="label">Message Count:</span> {{ chat.messageCount || 0 }}</div>
+          <div><span class="label">Last Message:</span> {{ chat.cardMessage }}</div>
+          <div class="buttons text-right">
+            <button class="btn image i-right" *ngIf="options.joinButton" (click)="takeChat(chat.key)">
+              Join
+              <img src="./assets/images/right.svg" alt="right">
+            </button>
+            <a class="btn image i-right" *ngIf="options.joinButtonVerB" [routerLink]="'/agent/chats/' + chat.key">
+              Join
+              <img src="./assets/images/right.svg" alt="right">
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
+
   </div>
 </ng-template>
 

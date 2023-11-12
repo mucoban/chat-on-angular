@@ -22,6 +22,11 @@ export class ChatListComponent implements OnInit, OnDestroy {
   newChats: ChatList[] =  [];
   activeChats: ChatList[] = [];
   closedChats: ChatList[] = [];
+  preloaders = {
+    newChats: true,
+    activeChats: true,
+    closedChats: true,
+  }
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -43,6 +48,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
             const chats = this.processChats(res);
             const newChats = chats.filter((i: any) => i.status === 'open');
             this.newChats = newChats as any;
+            this.preloaders.newChats = false
         });
 
         this.agentService.getAgentsChats(this.authService.user.uid)
@@ -53,7 +59,8 @@ export class ChatListComponent implements OnInit, OnDestroy {
             const closedChats = chats.filter((i: any) => i.status !== 'open');
             this.activeChats = activeChats as any;
             this.closedChats = closedChats as any;
-        });
+            this.preloaders.activeChats = this.preloaders.closedChats = false
+          });
 
       });
   }

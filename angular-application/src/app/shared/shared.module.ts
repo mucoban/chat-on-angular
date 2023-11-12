@@ -3,10 +3,12 @@ import {MessagesComponent} from "../messages/messages.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {NgScrollbarModule} from "ngx-scrollbar";
+import { PreloaderComponent } from './components/preloader/preloader.component';
 
 @NgModule({
   declarations: [
-    MessagesComponent
+    MessagesComponent,
+    PreloaderComponent
   ],
   imports: [
     CommonModule,
@@ -15,6 +17,7 @@ import {NgScrollbarModule} from "ngx-scrollbar";
   ],
   exports: [
     MessagesComponent,
+    PreloaderComponent,
   ],
   providers: []
 })
