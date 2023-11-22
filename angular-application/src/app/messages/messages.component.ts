@@ -10,8 +10,8 @@ import {NgScrollbar} from "ngx-scrollbar";
   styleUrls: ['./messages.component.scss'],
   animations: [
     trigger("messagesAni", [
-      transition('void => *', animate(300, keyframes([
-        style({ transform: 'scale(.7) translateY(0px)', transformOrigin: '100% 100%', opacity: 0, offset: 0 }),
+      transition('void => *', animate(200, keyframes([
+        style({ transform: 'scale(1) translateY(20px)', transformOrigin: '100% 100%', opacity: 0, offset: 0 }),
         style({ transform: 'scale(1) translateX(0px)', opacity: 1, offset: 1 })
       ])))
     ])
@@ -23,7 +23,7 @@ export class MessagesComponent implements OnInit {
     "message": new UntypedFormControl()
   });
 
-  @Input() isAgent: boolean;
+  @Input() isAgent: boolean = false
   @Input() messages: MessageModel[];
   @Input() newMessages: number;
 

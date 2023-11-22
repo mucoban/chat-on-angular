@@ -1,27 +1,29 @@
-<div class="wrapper" [ngClass]="{ 'sender-agent': isAgent }" [@messagesAni]>
-  <div class="action-buttons"></div>
-  <div class="messages-box">
-    <ng-scrollbar #scrollbarRef style="width: 100%;" [autoHeightDisabled]="false">
-      <ng-container *ngFor="let message of messages">
-        <ng-container *ngIf="!message.isInfo || (message.isInfo && ((isAgent && message.sender === 'agent') || (!isAgent && message.sender === 'client')) )">
-          <div class="message" [ngClass]="{ 'agent': message.sender === 'agent', 'info': message.isInfo }">
-            <div class="inner">{{ message?.message }} <span class="dateText">{{ message?.dateText }}</span></div>
-          </div>
+<div [@.disabled]="isAgent">
+  <div class="wrapper" [ngClass]="{ 'sender-agent': isAgent }" [@messagesAni]>
+    <div class="action-buttons"></div>
+    <div class="messages-box">
+      <ng-scrollbar #scrollbarRef style="width: 100%;" [autoHeightDisabled]="false">
+        <ng-container *ngFor="let message of messages">
+          <ng-container *ngIf="!message.isInfo || (message.isInfo && ((isAgent && message.sender === 'agent') || (!isAgent && message.sender === 'client')) )">
+            <div class="message" [ngClass]="{ 'agent': message.sender === 'agent', 'info': message.isInfo }">
+              <div class="inner">{{ message?.message }} <span class="dateText">{{ message?.dateText }}</span></div>
+            </div>
+          </ng-container>
         </ng-container>
-      </ng-container>
-    </ng-scrollbar>
-  </div>
-  <div class="input-box">
-    <form [formGroup]="inputForm" (submit)="sendMessage()">
-      <div class="col">
-        <input type="text" placeholder="type your message" formControlName="message">
-      </div>
-      <div class="col">
-        <button class="btn circle">
-          <img src="./assets/images/send.svg" />
-        </button>
-      </div>
-    </form>
+      </ng-scrollbar>
+    </div>
+    <div class="input-box">
+      <form [formGroup]="inputForm" (submit)="sendMessage()">
+        <div class="col">
+          <input type="text" placeholder="type your message" formControlName="message">
+        </div>
+        <div class="col">
+          <button class="btn circle">
+            <img src="./assets/images/send.svg" />
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

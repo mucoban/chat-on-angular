@@ -1,0 +1,11 @@
+DONE - animation for web, responsive and disable it on agent
+- message box arrows, typing, dont send empty message
+DONE - does firebase work well with a new account
+- record a video to guide how to set up
+- bgs
+- header bug
+- multiple welcome messages
+DONE - loader
+- responsive
+- add messages component to shared module
+
