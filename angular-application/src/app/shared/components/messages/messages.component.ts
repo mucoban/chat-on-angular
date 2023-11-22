@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {MessageModel} from "../shared/models/message.model";
 import {UntypedFormControl, UntypedFormGroup} from "@angular/forms";
 import {animate, keyframes, style, transition, trigger} from "@angular/animations";
 import {NgScrollbar} from "ngx-scrollbar";
+import {MessageModel} from "../../models/message.model";
 
 @Component({
   selector: 'app-messages',
