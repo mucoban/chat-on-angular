@@ -6,6 +6,7 @@ import {environment} from "../../../environments/environment";
 import {first} from "rxjs/operators";
 import {Store} from "@ngrx/store";
 import {newMessage, setCustomerState} from "../../store/actions";
+import {customerStates} from "../models/customer-states";
 
 
 @Injectable()
@@ -36,7 +37,10 @@ export class CustomerService {
       .pipe(first())
       .subscribe((res) => {
         res = res.filter(i => (i.payload.val() as any)?.status === 'open');
-        if (!res.length) { console.log('no open chat room'); }
+        if (!res.length) {
+          console.log('no open chat room')
+          this.store.dispatch(setCustomerState(customerStates.waiting))
+        }
         else {
           this.chatRoomId = res[0].key as string;
           this.initChatRoom();
@@ -59,10 +63,8 @@ export class CustomerService {
   private initChatRoom(isCreateChatRoom?: boolean) {
     if (isCreateChatRoom) {
       this.sendNotificationEmail();
-      this.store.dispatch(setCustomerState('chat-started'))
-    } else {
-      this.store.dispatch(setCustomerState('chat-started'))
     }
+    this.store.dispatch(setCustomerState(customerStates.chatStarted))
     let customerMessagesCount: number = 0
 
     const o = this.db.list('chatRooms/' + this.chatRoomId);
@@ -116,7 +118,7 @@ export class CustomerService {
 
   endChat() {
     this.db.list('chatRooms').update(this.chatRoomId, { status: 'closed' });
-    this.store.dispatch(setCustomerState('waiting'))
+    this.store.dispatch(setCustomerState(customerStates.waiting))
     this.chatRoomId = '';
     this.messages = [];
   }

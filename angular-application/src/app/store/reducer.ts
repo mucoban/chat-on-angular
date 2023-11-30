@@ -1,10 +1,11 @@
 import {createReducer, on} from "@ngrx/store";
 import {emtpyMessages, callAction, newMessage, setCustomerState} from "./actions";
 import {MessageModel} from "../shared/models/message.model";
+import {customerStates} from "../shared/models/customer-states";
 
 const initialStateNewMessages: MessageModel[] = []
 
-const initialStateCustomerState: string = 'waiting'
+const initialStateCustomerState: number = customerStates.willInit
 
 export const MessagesReducer = createReducer(initialStateNewMessages,
   on(emtpyMessages, (state) => []),

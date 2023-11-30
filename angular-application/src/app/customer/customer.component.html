@@ -1,9 +1,14 @@
-<ng-container *ngIf="customerStatus === 'chat-started'">
+<ng-container *ngIf="customerStatus === customerStates.chatStarted">
   <app-messages [messages]="messages" [newMessages]="newMessages"
                 (messageSent)="insertMessage($event)"></app-messages>
 </ng-container>
 
-<button class="switch-btn" [ngClass]="{ 'close-on': customerStatus === 'chat-started' }" (click)="onClickSwitchButton()">
+<button class="switch-btn"
+        [ngClass]="{
+            'close-on': customerStatus === customerStates.chatStarted,
+            'loading': customerStatus === customerStates.willInit,
+        }"
+        (click)="onClickSwitchButton()">
   <img src="assets/images/mail3.svg" alt="mail">
   <span class="close-icon">
     <span></span>

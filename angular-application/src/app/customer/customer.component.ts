@@ -9,6 +9,7 @@ import {environment} from "../../environments/environment";
 import {Store} from "@ngrx/store";
 import {setCustomerState} from "../store/actions";
 import {ActivatedRoute, Router} from "@angular/router";
+import {customerStates} from "../shared/models/customer-states";
 
 @Component({
   selector: 'app-customer',
@@ -19,13 +20,15 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<boolean>();
   private isParentMobile: boolean;
-  customerStatus: string;
+  customerStatus: number;
   messages: MessageModel[] = [];
   newMessages: number = 0;
 
   inputForm = new UntypedFormGroup({
     "message": new UntypedFormControl()
   });
+
+  protected readonly customerStates = customerStates;
 
   constructor(
     private authService: AuthService,
@@ -61,19 +64,20 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
   onClickSwitchButton() {
     switch (this.customerStatus) {
-      case 'chat-started':
-        this.store.dispatch(setCustomerState('minimized'))
+      case customerStates.chatStarted:
+        this.store.dispatch(setCustomerState(customerStates.minimized))
         break
-      case 'waiting':
+      case customerStates.waiting:
         this.createChatRoom()
         break
-      default:
-        this.store.dispatch(setCustomerState('chat-started'))
+      case customerStates.minimized:
+        this.store.dispatch(setCustomerState(customerStates.chatStarted))
+        break
     }
   }
 
-  handleCustomerStatus(status: string) {
-    if (status === 'chat-started') {
+  handleCustomerStatus(status: number) {
+    if (status === customerStates.chatStarted) {
       if (this.isParentMobile) parent.postMessage([
           { prop: 'width', value: '100%' },
           { prop: 'height', value: '100%' },
