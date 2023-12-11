@@ -14,21 +14,35 @@
   }
 }
 .messages-box {
-  padding: 10px; margin-bottom: 5px; padding-right: 0px;
+  padding: 10px 0; margin-bottom: 5px;
   height: calc(100vh - 162px);
   display: flex; align-items: flex-end;
   border: 0px solid #ccc;
 }
 .message {
-  margin-bottom: 5px; text-align: right; padding-right: 15px;
+  $messageBoxColor: #57c28e;
+  $messageBoxColorAgent: #748ccc;
+  margin-bottom: 5px; text-align: right;
+  padding-left: 20px;
+  padding-right: 20px;
   .inner {
-    display: inline-block; background-color: #57c28e;  padding: 5px 10px; max-width: 500px;
-    border-radius: 5px; color: white;
+    display: inline-block; background-color: $messageBoxColor;  padding: 5px 10px; max-width: 500px;
+    border-radius: 5px; color: white; position: relative;
     .dateText { font-size: 9px; }
   }
-  &.agent { text-align: left;
+
+  .triangle {
+    width: 13px; position: absolute; bottom: -6px; right: -6px;
+    svg { fill: $messageBoxColor }
+  }
+
+  &.agent { text-align: left; padding-left: 10px;
     .inner {
-      background-color: #748ccc;
+      background-color: $messageBoxColorAgent;
+    }
+    .triangle {
+      right: unset; left: -6px;
+      svg { fill: $messageBoxColorAgent }
     }
   }
   &.info { text-align: center !important;
@@ -54,8 +68,13 @@
 .sender-agent {
   .message {
     text-align: left;
+    .triangle {
+      right: unset; left: -6px;
+    }
+
     &.agent { text-align: right;
-      .inner {
+      .triangle {
+        left: unset; right: -6px;
       }
     }
   }
