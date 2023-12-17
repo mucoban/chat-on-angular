@@ -1,3 +1,5 @@
+@import "../../config";
+
 .switch-btn {
   width: 75px;
   height: 75px;
@@ -7,7 +9,7 @@
   float: right;
   margin: 10px 16px 16px 0;
   transition: all .6s;
-  background: #1174c4;
+  background: $switchBtnBackgroundColor;
   position: relative;
 
   img { width: 46px; transition: opacity .3s .3s; margin-top: 8px; }
@@ -29,7 +31,7 @@
     .box {
       width: 25px;
       height: 25px;
-      background: #1174c4;
+      background: $switchBtnBackgroundColor;
       transform: translate(0px, -18px) rotate(45deg) skew(10deg, 10deg);
     }
   }
