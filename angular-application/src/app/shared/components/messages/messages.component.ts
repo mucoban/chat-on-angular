@@ -44,8 +44,11 @@ export class MessagesComponent implements OnInit {
   }
 
   sendMessage() {
-    this.messageSent.emit(this.inputForm.value.message)
-    this.inputForm.reset();
+    const message = this.inputForm.value.message
+    if (message) {
+      this.messageSent.emit(message)
+      this.inputForm.reset();
+    }
   }
 
 }
