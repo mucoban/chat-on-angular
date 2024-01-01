@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../shared/services/auth.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-login',
@@ -9,6 +10,8 @@ import {AuthService} from "../../shared/services/auth.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  protected readonly environment = environment;
 
   error: string;
   form =  new UntypedFormGroup({

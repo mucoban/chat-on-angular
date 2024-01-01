@@ -9,7 +9,7 @@
 
     <ng-container [ngTemplateOutlet]="chatCard"
                   [ngTemplateOutletContext]="{ chats: closedChats, type: 'old', headline: 'Closed Chats',
-                   preloader: preloaders.closedChats, preloaderBarColor: '#dbae04', options: { deleteButton: true, joinButtonVerB: true } }" />
+                   preloader: preloaders.closedChats, preloaderBarColor: '#dbae04', options: { joinButtonVerB: true } }" />
 
 </div>
 <ng-template #chatCard
