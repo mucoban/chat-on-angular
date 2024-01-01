@@ -25,7 +25,7 @@
       <p *ngIf="!chats.length">No {{type}} chats</p>
       <div class="chats">
         <div class="chat" *ngFor="let chat of chats">
-          <div class="text-center" *ngIf="options.deleteButton">
+          <div class="text-center">
             <button class="btn circle remove" (click)="deleteChat(chat.key)"><img src="./assets/images/trash.svg" /></button>
           </div>
           <div><span class="label">Chat Id:</span> {{ chat.key }}</div>

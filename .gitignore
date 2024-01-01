@@ -1,3 +1,4 @@
+todos.txt
 /notes
 /src/environments/*
 !/src/environments/environment.example.ts

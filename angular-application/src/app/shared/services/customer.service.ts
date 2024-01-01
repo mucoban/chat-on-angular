@@ -104,9 +104,12 @@ export class CustomerService {
   }
 
   private sendNotificationEmail() {
-    if (environment.formspreeApiUrl)
-    this.httpClient.post(environment.formspreeApiUrl, { email: 'a@a.com', message: 'new coa customer has started chating' })
-      .subscribe();
+    if (environment.formspreeApiUrl) {
+      const randomNumber = Math.floor(Math.random() * (999999 - 100000) + 100000)
+      this.httpClient.post(environment.formspreeApiUrl, { email: 'a' + randomNumber + '@a.com', message: 'new coa customer has started chating ' + randomNumber })
+        .subscribe();
+    }
+
   }
 
   sendMessage(message: string, isInfo?: boolean) {
