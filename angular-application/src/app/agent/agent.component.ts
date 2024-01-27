@@ -36,7 +36,7 @@ export class AgentComponent implements OnInit, OnDestroy {
         this.isAgentLoggedIn = value;
       } });
 
-    const setIsChatDetail = (url: string) => { this.isChatDetail = !url.match(/\/agent\/chats$/) }
+    const setIsChatDetail = (url: string) => { this.isChatDetail = Boolean(url.match(/\/agent\/chats\/(.*?)/)) }
     setIsChatDetail(window.location.href)
     this.router.events.subscribe(event => { if (event instanceof NavigationEnd) { setIsChatDetail(event.url) } })
   }
