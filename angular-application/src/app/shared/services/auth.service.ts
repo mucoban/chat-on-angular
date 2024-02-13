@@ -19,7 +19,7 @@ export class AuthService {
     public router: Router,
     ) {  }
 
-  get _agentDetail() { return localStorage.getItem(this.fbAgentLsStr) }
+  get _agentDetail(): string { return localStorage.getItem(this.fbAgentLsStr) || '' }
 
   get _isAgentSignedIn(): boolean {
     return Boolean(this._agentDetail);

@@ -3,7 +3,7 @@ import {AgentService} from "../../shared/services/agent.service";
 import {AuthService} from "../../shared/services/auth.service";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
-import {first, takeUntil} from "rxjs/operators";
+import {takeUntil} from "rxjs/operators";
 import {MessageModel} from "../../shared/models/message.model";
 
 interface ChatList {
@@ -27,6 +27,8 @@ export class ChatListComponent implements OnInit, OnDestroy {
     activeChats: true,
     closedChats: true,
   }
+  private uuid: string
+
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -46,8 +48,8 @@ export class ChatListComponent implements OnInit, OnDestroy {
         this.preloaders.newChats = false
       });
 
-    const uuid: any = this.authService._agentDetail
-    this.agentService.getAgentsChats(uuid)
+    this.uuid = this.authService._agentDetail
+    this.agentService.getAgentsChats(this.uuid)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         const chats = this.processChats(res);
@@ -66,7 +68,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
   }
 
   takeChat(id: string) {
-    this.agentService.takeChat(this.authService.user.uid, id)
+    this.agentService.takeChat(this.uuid, id)
       .then(result => { this.router.navigate(['agent/chats/' + id]) });
   }
 
