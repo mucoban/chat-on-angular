@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.form.invalid) { this.error = 'The form is invalid'; return; }
     this.error = '';
-    this.authService.signIn(this.form.value.username, this.form.value.password)
+    this.authService.signIn(this.form.value.username, this.form.value.password, true)
       .then(
         () => { this.router.navigate(['/agent']); }
       )

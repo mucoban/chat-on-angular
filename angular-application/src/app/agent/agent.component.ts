@@ -30,7 +30,7 @@ export class AgentComponent implements OnInit, OnDestroy {
     this.renderer2.setStyle(document.body, 'position', 'static');
 
     this.isAgentLoggedIn = this.authService._isAgentSignedIn;
-    this.authService.isFbUserSingedIn
+    this.authService.isFbAgentSingedIn
       .pipe(takeUntil(this.destroy$))
       .subscribe({ next: value => {
         this.isAgentLoggedIn = value;
@@ -51,6 +51,6 @@ export class AgentComponent implements OnInit, OnDestroy {
     this.store.dispatch(callAction(null))
   }
 
-  onLogout() { this.authService.signOut(); }
+  onLogout() { this.authService.signOut(true); }
 
 }

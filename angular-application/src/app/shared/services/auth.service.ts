@@ -9,19 +9,23 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 export class AuthService {
   user: any;
   isFbUserSingedIn = new Subject<boolean>();
+  isFbAgentSingedIn = new Subject<boolean>();
 
   private fbUserLsStr = 'fbUser';
+  private fbAgentLsStr = 'fbAgent';
 
   constructor(
     public afAuth: AngularFireAuth,
     public router: Router,
     ) {  }
 
+  get _agentDetail() { return localStorage.getItem(this.fbAgentLsStr) }
+
   get _isAgentSignedIn(): boolean {
-    return Boolean(localStorage.getItem(this.fbUserLsStr));
+    return Boolean(this._agentDetail);
   }
 
-  signInCheckRemote(data?: { email: string, password: string }) {
+  signInCheckRemote(data?: null | { email: string, password: string }) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = {uid: user.uid};
@@ -34,28 +38,28 @@ export class AuthService {
     });
   }
 
-  signIn(email: string, password: string) {
+  signIn(email: string, password: string, isAgent?: boolean) {
     const promise = new Promise((resolve, reject) => {
       this.afAuth.signInWithEmailAndPassword(email, password)
         .then((result) => {
-          localStorage.setItem(this.fbUserLsStr, '1');
-          this.isFbUserSingedIn.next(true);
+          localStorage.setItem(isAgent ? this.fbAgentLsStr : this.fbUserLsStr, result.user?.uid || '');
+          isAgent ? this.isFbAgentSingedIn.next(true) : this.isFbUserSingedIn.next(true);
           resolve('');
         })
         .catch((error) => {
           console.log(error);
           reject(error.message);
-          localStorage.setItem(this.fbUserLsStr, '');
+          localStorage.setItem(isAgent ? this.fbAgentLsStr : this.fbUserLsStr, '');
         });
     });
 
     return promise;
   }
 
-  signOut() {
+  signOut(isAgent?: boolean) {
     this.afAuth.signOut().then(() => {
-      localStorage.setItem(this.fbUserLsStr, '');
-      this.isFbUserSingedIn.next(false);
+      localStorage.removeItem(isAgent ? this.fbAgentLsStr : this.fbUserLsStr);
+      (isAgent ? this.isFbAgentSingedIn : this.isFbUserSingedIn).next(false);
       this.router.navigate(['/agent/login']);
     });
   }

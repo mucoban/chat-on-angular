@@ -36,33 +36,28 @@ export class ChatListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.authService.signInCheckRemote();
 
-    this.authService.isFbUserSingedIn
-      .pipe(first())
-      .subscribe(result => {
-
-        this.agentService.getNewChats()
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((res) => {
-            const chats = this.processChats(res);
-            const newChats = chats.filter((i: any) => i.status === 'open');
-            this.newChats = newChats as any;
-            this.preloaders.newChats = false
-        });
-
-        this.agentService.getAgentsChats(this.authService.user.uid)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((res) => {
-            const chats = this.processChats(res);
-            const activeChats = chats.filter((i: any) => i.status === 'open');
-            const closedChats = chats.filter((i: any) => i.status !== 'open');
-            this.activeChats = activeChats as any;
-            this.closedChats = closedChats as any;
-            this.preloaders.activeChats = this.preloaders.closedChats = false
-          });
-
+    this.agentService.getNewChats()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        const chats = this.processChats(res);
+        const newChats = chats.filter((i: any) => i.status === 'open');
+        this.newChats = newChats as any;
+        this.preloaders.newChats = false
       });
+
+    const uuid: any = this.authService._agentDetail
+    this.agentService.getAgentsChats(uuid)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        const chats = this.processChats(res);
+        const activeChats = chats.filter((i: any) => i.status === 'open');
+        const closedChats = chats.filter((i: any) => i.status !== 'open');
+        this.activeChats = activeChats as any;
+        this.closedChats = closedChats as any;
+        this.preloaders.activeChats = this.preloaders.closedChats = false
+      });
+
   }
 
   ngOnDestroy() {
