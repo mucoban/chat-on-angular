@@ -86,8 +86,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
     }
     else {
       parent.postMessage([
-        { prop: 'width', value: '100px' },
-        { prop: 'height', value: '100px' },
+        { prop: 'width', value: '70px' },
+        { prop: 'height', value: '70px' },
       ], "*");
     }
     this.customerStatus = status;
