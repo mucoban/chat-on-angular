@@ -9,6 +9,7 @@
             'loading': customerStatus === customerStates.willInit,
         }"
         (click)="onClickSwitchButton()">
+  <app-preloader *ngIf="customerStatus === customerStates.willInit" borderColor="#ddd" />      
   <img src="assets/images/mail3.svg" alt="mail">
   <span class="close-icon">
     <span></span>

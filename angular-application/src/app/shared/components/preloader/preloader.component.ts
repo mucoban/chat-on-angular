@@ -7,6 +7,7 @@ import {Component, Input} from '@angular/core';
 })
 export class PreloaderComponent {
 
-  @Input() barColor: string = 'black'
+  @Input() borderColor: string = 'black'
+  @Input() minHeight: string | null = null
 
 }

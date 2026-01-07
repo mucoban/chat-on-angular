@@ -1,11 +1,37 @@
-DONE - animation for web, responsive and disable it on agent
-- message box arrows, typing, dont send empty message
-DONE - does firebase work well with a new account
-- record a video to guide how to set up
-- bgs
-- header bug
-- multiple welcome messages
-DONE - loader
-- responsive
-- add messages component to shared module
+ongoing:
 
+
+todo:
+
+- add varios styles for icon, env to scss
+- class function graphic, test how many times login logout works
+- typing,
+- examine rivals
+- record a video to guide how to set up, and usage
+- bgs
+- responsive
+- localization
+- preloader for messages
+- agent online, offline mode
+- agent chat detail css work
+
+BUGS
+DONE - dont send empty message
+
+- new chat dont get deleted on ui
+- old chat are being loaded on file:///Users/mucoban/Documents/my%20projects/chat-on-angular/example-page/index.html
+
+
+
+
+DONE - improve the preloader as it can be used everywhere
+DONE - animation for web, responsive and disable it on agent
+DONE - loader
+DONE - add messages component to shared module
+DONE - does firebase work well with a new account
+DONE - multiple welcome messages - happens on click before start (customer) - state will init
+DONE - add formspree
+DONE - make demo agent panel with username and password
+DONE - common colors and config across app
+DONE - examine and slide the whole auth, remove authService.signincheckremote(), update go-to-agent-panel
+      /header bug

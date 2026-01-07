@@ -18,9 +18,8 @@
   <div class="chat-list-box {{ type }}">
     <h2 class="font-weight-400">{{headline}}({{ chats.length }})</h2>
 
-    <div *ngIf="preloader" class="preloader-wrapper">
-      <app-preloader [barColor]="preloaderBarColor"></app-preloader>
-    </div>
+    <app-preloader *ngIf="preloader" [borderColor]="preloaderBarColor" />
+    
     <ng-container *ngIf="!preloader">
       <p *ngIf="!chats.length">No {{type}} chats</p>
       <div class="chats">

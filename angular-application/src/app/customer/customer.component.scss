@@ -49,5 +49,5 @@
     }
   }
 
-  &.loading { opacity: .6 }
+  &.loading { pointer-events: none; }
 }
