@@ -1,23 +1,24 @@
-<div class="header" *ngIf="isAgentLoggedIn">
-  <div class="logo">
-    <div>Chat on Angular</div>
-    <div>Agent Panel</div>
-  </div>
-  <ng-container *ngIf="isChatDetail">
-    <a class="btn image m-r-10" routerLink="/agent/chats">
-      <img src="./assets/images/back.svg" alt="back">
-      All Chats
-    </a>
-    <a class="btn image warning" (click)="endTheChat()">
-      <img src="./assets/images/close.svg" alt="close">
-      End The Chat
-    </a>
-  </ng-container>
-
-  <div class="logout-holder">
-    <button class="btn image no-wrap" (click)="onLogout()">
-      <img src="./assets/images/logout.svg" alt="logout">
+@if (isAgentLoggedIn) {
+  <div class="header">
+    <div class="logo">
+      <div>Chat on Angular</div>
+      <div>Agent Panel</div>
+    </div>
+    @if (isChatDetail) {
+      <a class="btn image m-r-10" routerLink="/agent/chats">
+        <img src="./assets/images/back.svg" alt="back">
+        All Chats
+      </a>
+      <a class="btn image warning" (click)="endTheChat()">
+        <img src="./assets/images/close.svg" alt="close">
+        End The Chat
+      </a>
+    }
+    <div class="logout-holder">
+      <button class="btn image no-wrap" (click)="onLogout()">
+        <img src="./assets/images/logout.svg" alt="logout">
       Log out</button>
+    </div>
   </div>
-</div>
+}
 <router-outlet></router-outlet>

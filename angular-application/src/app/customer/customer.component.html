@@ -1,15 +1,17 @@
-<ng-container *ngIf="customerStatus === customerStates.chatStarted">
+@if (customerStatus === customerStates.chatStarted) {
   <app-messages [messages]="messages" [newMessages]="newMessages"
-                (messageSent)="insertMessage($event)"></app-messages>
-</ng-container>
+  (messageSent)="insertMessage($event)"></app-messages>
+}
 
 <button class="switch-btn"
         [ngClass]="{
             'close-on': customerStatus === customerStates.chatStarted,
             'loading': customerStatus === customerStates.willInit,
         }"
-        (click)="onClickSwitchButton()">
-  <app-preloader *ngIf="customerStatus === customerStates.willInit" borderColor="#ddd" />      
+  (click)="onClickSwitchButton()">
+  @if (customerStatus === customerStates.willInit) {
+    <app-preloader borderColor="#ddd" />
+  }
   <img src="assets/images/mail3.svg" alt="mail">
   <span class="close-icon">
     <span></span>
