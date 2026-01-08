@@ -13,9 +13,10 @@ interface ChatList {
 }
 
 @Component({
-  selector: 'app-chat-list',
-  templateUrl: './chat-list.component.html',
-  styleUrls: ['./chat-list.component.scss']
+    selector: 'app-chat-list',
+    templateUrl: './chat-list.component.html',
+    styleUrls: ['./chat-list.component.scss'],
+    standalone: false
 })
 export class ChatListComponent implements OnInit, OnDestroy {
 

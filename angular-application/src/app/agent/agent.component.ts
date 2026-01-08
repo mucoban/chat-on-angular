@@ -7,9 +7,10 @@ import {Store} from "@ngrx/store";
 import {callAction} from "../store/actions";
 
 @Component({
-  selector: 'app-agent',
-  templateUrl: './agent.component.html',
-  styleUrls: ['./agent.component.scss']
+    selector: 'app-agent',
+    templateUrl: './agent.component.html',
+    styleUrls: ['./agent.component.scss'],
+    standalone: false
 })
 export class AgentComponent implements OnInit, OnDestroy {
 

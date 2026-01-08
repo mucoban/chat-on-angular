@@ -8,9 +8,10 @@ import {Store} from "@ngrx/store";
 import {emtpyMessages} from "../../store/actions";
 
 @Component({
-  selector: 'app-chat-detail',
-  templateUrl: './chat-detail.component.html',
-  styleUrls: ['./chat-detail.component.scss']
+    selector: 'app-chat-detail',
+    templateUrl: './chat-detail.component.html',
+    styleUrls: ['./chat-detail.component.scss'],
+    standalone: false
 })
 export class ChatDetailComponent implements OnInit, OnDestroy {
 
