@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "github-build": "ng build --configuration production --base-href 'https://mucoban.github.io/chat-on-angular/'",
+    "github-deploy": "npx angular-cli-ghpages --dir=dist/chat-on-angular/browser --no-silent"
   },
   "private": true,
   "dependencies": {

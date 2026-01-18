@@ -2,12 +2,12 @@ ongoing:
 
 
 todo:
-
+- record a video to guide how to set up, and usage
+- notification number of new messages and dont open the chat window automatically
 - add varios styles for icon, env to scss
 - class function graphic, test how many times login logout works
 - typing,
 - examine rivals
-- record a video to guide how to set up, and usage
 - bgs
 - responsive
 - localization
